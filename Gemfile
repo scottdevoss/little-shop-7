@@ -54,7 +54,6 @@ group :development, :test do
   gem "pry"
   gem "rspec-rails"
   gem "capybara" 
-  gem "pry" 
   gem "faker" 
   gem "factory_bot_rails" 
   gem "orderly" 

@@ -1,4 +1,4 @@
-.20<h1>Admin: Merchants Index</h1>
+<h1>Admin: Merchants Index</h1>
 <% @merchants.each do |merchant|%>
-  <p><%= "Name: #{merchant.name}"%></p>
+  <p><%= link_to merchant.name, admin_merchant_path(merchant.id) %></p>
 <% end %>

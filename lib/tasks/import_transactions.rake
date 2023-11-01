@@ -1,6 +1,6 @@
 namespace :csv_load do
   desc "TODO"
-  task customers: :environment do
+  task transactions: :environment do
     require "csv"
 
     csv_text = File.read(Rails.root.join('db', 'data', 'transactions.csv'))

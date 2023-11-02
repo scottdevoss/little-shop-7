@@ -5,3 +5,20 @@
 <div class="subhead">
 <h3>Admin Dashboard</h3>
 </div>
+
+<div class="subhead">
+  <div class="links">
+    <h3>Links</h3>
+    <h4><%= link_to "Merchants", "/admin/merchants" %></h4>
+    <h4><%= link_to "Invoices", "/admin/invoices" %></h4>
+  </div>
+</div>
+
+<div class="subhead">
+  <div class="top5">
+    <h3>Top 5 Customers By Successful Transactions</h3>
+    <% @customers.top_five.each do |customer| %>
+      <h4><%= customer.full_name %>: <%= customer.success_transactions %> successful orders</h4>
+    <% end %>
+ </div>
+</div>   

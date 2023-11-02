@@ -14,14 +14,14 @@ RSpec.describe "Admin Merchants Index", type: feature do
 
     visit "/admin/merchants"
 
-    expect(page).to have_content("Name: #{merch1.name}")
-    expect(page).to have_content("Name: #{merch2.name}")
-    expect(page).to have_content("Name: #{merch3.name}")
-    expect(page).to have_content("Name: #{merch4.name}")
-    expect(page).to have_content("Name: #{merch5.name}")
-    expect(page).to have_content("Name: #{merch6.name}")
-    expect(page).to have_content("Name: #{merch7.name}")
-    expect(page).to have_content("Name: #{merch8.name}")
+    expect(page).to have_content("#{merch1.name}")
+    expect(page).to have_content("#{merch2.name}")
+    expect(page).to have_content("#{merch3.name}")
+    expect(page).to have_content("#{merch4.name}")
+    expect(page).to have_content("#{merch5.name}")
+    expect(page).to have_content("#{merch6.name}")
+    expect(page).to have_content("#{merch7.name}")
+    expect(page).to have_content("#{merch8.name}")
   end
   
 end 

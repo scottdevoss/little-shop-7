@@ -1,12 +1,11 @@
 require "rails_helper"
 
-RSpec.describe Merchant, type: :model do
+RSpec.describe Customer, type: :model do
   describe "relationships" do
-    it { should have_many(:items) }
-    it { should have_many(:invoices).through(:items) }
+    it { should have_many(:invoices) }
   end
 
-  describe "#top_5_customers" do
+  describe "#top_five" do
     it "displays the top 5 customers" do
       @merchant1 = Merchant.create!(name: "Hannah's Handbags")
       @merchant2 = Merchant.create!(name: "Jason's Furniture")
@@ -36,11 +35,17 @@ RSpec.describe Merchant, type: :model do
       @transaction6 = Transaction.create!(credit_card_number: 123456789, credit_card_expiration_date: "11/26", result: 0, invoice_id: @invoice6.id)
       @transaction7 = Transaction.create!(credit_card_number: 123456789, credit_card_expiration_date: "11/26", result: 1, invoice_id: @invoice7.id)
 
-      top_5 = @merchant1.top_5_customers
 
-      expect(top_5).to eq([@customer2, @customer3, @customer4, @customer5, @customer6])
-      expect(top_5).to_not include(@customer1)
-      expect(top_5).to_not include(@customer7)
+      expect(Customer.top_five).to eq([@customer2, @customer3, @customer4, @customer5, @customer6])
+      expect(Customer.top_five).to_not include(@customer1)
+      expect(Customer.top_five).to_not include(@customer7)
+    end
+  end
+
+  describe "full name" do 
+    it 'can give a customers full name' do
+      customer = Customer.create!(first_name: "John", last_name: "Jacobs")
+      expect(customer.full_name).to eq("John Jacobs")
     end
   end
 end

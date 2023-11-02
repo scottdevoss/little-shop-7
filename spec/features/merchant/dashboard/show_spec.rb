@@ -29,21 +29,14 @@ RSpec.describe "Merchant Dashboard", type: :feature do
     @transaction_5 = Transaction.create!(credit_card_number: 123456789, credit_card_expiration_date: "11/26", result: 0, invoice_id: @invoice_5.id)
     @transaction_6 = Transaction.create!(credit_card_number: 123456789, credit_card_expiration_date: "11/26", result: 0, invoice_id: @invoice_6.id)
     @transaction_7 = Transaction.create!(credit_card_number: 123456789, credit_card_expiration_date: "11/26", result: 1, invoice_id: @invoice_7.id)
-        @item1 = Item.create!(
+        
+    @item1 = Item.create!(
       id: 1,
       name: "Item Qui Esse",
       description:
       "Nihil autem sit odio inventore deleniti.",
       unit_price: 75107,
       merchant_id: @merchant1.id
-    )
-    @customer1 = Customer.create!(id: 1, first_name: "Alan", last_name: "Smith")
-    @invoice1 = Invoice.create!(id: 1, status: 1, customer_id: @customer1.id)
-    @invoice_item = InvoiceItem.create!(
-      item_id: @item1.id,
-      invoice_id: @invoice1.id,
-      quantity: 1,
-      unit_price: @item1.unit_price
     )
     @item2 = Item.create!( 
       id: 2,
@@ -52,6 +45,22 @@ RSpec.describe "Merchant Dashboard", type: :feature do
       "Cumque consequuntur ad.",
       unit_price: 67076,
       merchant_id: @merchant1.id
+    )
+    @customer1 = Customer.create!(id: 1, first_name: "Alan", last_name: "Smith")
+    @customer2 = Customer.create!(id: 2, first_name: "Steve", last_name: "Johnson")
+    @invoice1 = Invoice.create!(id: 1, status: 1, customer_id: @customer1.id, created_at: "11/2/2014")
+    @invoice2 = Invoice.create!(id: 2, status: 1, customer_id: @customer2.id)
+    @invoice_item = InvoiceItem.create!(
+      item_id: @item1.id,
+      invoice_id: @invoice1.id,
+      quantity: 1,
+      unit_price: @item1.unit_price
+    )
+    @invoice_item2 = InvoiceItem.create!(
+      item_id: @item2.id,
+      invoice_id: @invoice2.id,
+      quantity: 1,
+      unit_price: @item2.unit_price
     )
   end
 
@@ -63,7 +72,7 @@ RSpec.describe "Merchant Dashboard", type: :feature do
         visit "/merchants/#{@merchant1.id}/dashboard"
 
         expect(page).to have_content(@merchant1.name)
-        # expect(page).to_not have_content(@merchant2.name)
+        expect(page).to_not have_content(@merchant2.name)
       end
       
       it "I see a link to my merchant items index" do 
@@ -89,7 +98,7 @@ RSpec.describe "Merchant Dashboard", type: :feature do
         #User Story 3
         it "shows names of the top five customers" do
           visit "/merchants/#{@merchant1.id}/dashboard"
-
+          
           expect(page).to have_content("Top 5 Customers")
           expect(page).to have_content("Susan Robinson Successful Transactions: 1")
           expect(page).to have_content("Jessica Simpson Successful Transactions: 1")
@@ -100,7 +109,17 @@ RSpec.describe "Merchant Dashboard", type: :feature do
           expect(page).to_not have_content("John Jacobs")
         end
       end
+      #User Story 5
+      describe "In the section 'Items Ready to Ship'" do
+        it "Next to each Item name I see the date that the invoice was created and I see the list is ordered oldest to newest" do
+          visit "/merchants/#{@merchant1.id}/dashboard"
+          
+          expect(page).to have_content(@invoice1.created_at.strftime("%A, %B %-d, %Y"))
+          expect(page).to have_content(@invoice2.created_at.strftime("%A, %B %-d, %Y"))
 
+          expect(@invoice1.created_at.strftime("%A, %B %-d, %Y")).to appear_before(@invoice2.created_at.strftime("%A, %B %-d, %Y"))
+        end
+      end
     end
   end
 end

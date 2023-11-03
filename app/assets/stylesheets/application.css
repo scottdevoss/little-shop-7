@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+
+ .container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+ }
+
+ .show-merch {
+  margin-right: 10px;
+ }

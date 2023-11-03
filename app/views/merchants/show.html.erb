@@ -2,14 +2,16 @@
 <h1><%= @merchant.name %></h1>
 </div>
 
+<section id="ready_to_ship">
 <h3>Items Ready To Ship</h3>
-  <% @merchant.items.each do |item| %>
-  <p><%= item.name %> 
-  <% item.invoice.each do |invoice| %>
-    Invoice Creation Date: <%= invoice.created_at.strftime("%A, %B %-d, %Y") %>
-    <%= link_to "Invoice ID", "/merchants/#{@merchant.id}/invoices/#{invoice.id}" %></p>
-  <% end %>
-  <% end %>
+<% @items.select { |item| item.packaged }.each do |item| %>
+  <p>
+    <%= item.name %>
+    <%= link_to "Invoice #{item.invoice_id}", "/merchants/#{item.merchant_id}/invoices/#{item.invoice_id}" %>
+    Creation Date: <%= item.invoice_date %>
+  </p>
+<% end %>
+</section>
 
 <p><%= link_to "Items", "/merchants/#{@merchant.id}/items" %></p>
 <p><%= link_to "Invoices", "/merchants/#{@merchant.id}/invoices" %></p>

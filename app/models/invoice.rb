@@ -5,4 +5,16 @@ class Invoice < ApplicationRecord
   belongs_to :customer
   
   enum status: {"cancelled": 0, "in progress": 1, "completed": 2}
+
+  def self.incomplete_by_creation_date
+    where(status: 1).order(:created_at)
+  end
+
+  def creation_date
+    created_at.strftime "%A, %B %-d, %Y"
+  end
+
+  def customer_name
+    "#{customer.first_name} #{customer.last_name}"
+  end
 end

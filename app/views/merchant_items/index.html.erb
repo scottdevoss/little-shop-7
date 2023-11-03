@@ -2,5 +2,8 @@
 <h1>Items</h1>
 </div>
 <% @items.each do |item| %>
-  <h3><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %></h3>
+  <h3><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
+  </h3>
 <% end %>
+
+<%= link_to "Create A New Item", "/merchants/#{@merchant.id}/items/new" %>

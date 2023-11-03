@@ -1,4 +1,2 @@
-<h1>Merchant Show Page</h1>
-<div>
-  <h3><%= @merchant.name %></h3> <%= link_to "Update", edit_admin_merchant_path(@merchant), method: :get %>
-</div>
+<h1>Merchant Show</h1>
+<h3><span class="show-merch"><%= @merchant.name %> </span><%= link_to "Update", edit_admin_merchant_path(@merchant), method: :get %></h3>

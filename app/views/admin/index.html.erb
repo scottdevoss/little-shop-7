@@ -22,3 +22,12 @@
     <% end %>
  </div>
 </div>   
+
+<div class="subhead">
+  <section class="Incomplete Invoices">
+    <h3>Incomplete Invoices</h3>
+    <% @invoices.incomplete_by_creation_date.each do |invoice| %>
+      <li>ID: <%= link_to "#{invoice.id}", "/admin/invoices/#{invoice.id}" %>: Created <%= invoice.creation_date %></li>
+    <% end %>
+  </section>
+</div>  

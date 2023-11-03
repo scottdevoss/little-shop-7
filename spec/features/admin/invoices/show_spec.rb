@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe '/admin' do
+RSpec.describe 'admin invoices show page' do
   describe 'as an admin' do
-    describe 'when I visit admin dashboard (/admin)' do
+    describe 'when I visit admin invoices show page (/admin/invoices/:id)' do
       before :each do
         @customer1 = Customer.create!(first_name: "Joey", last_name: "Ondricka")
         @customer2 = Customer.create!(first_name: "Cecelia", last_name: "Osinski")
@@ -39,90 +39,15 @@ RSpec.describe '/admin' do
         @tranaction11 = Transaction.create!(invoice_id: @invoice6.id, credit_card_number: "4654405418249632", credit_card_expiration_date: "04/27", result: "success")
         @tranaction12 = Transaction.create!(invoice_id: @invoice7.id, credit_card_number: "4654405418249632", credit_card_expiration_date: "04/27", result: "success")
       end
-      it 'shows a header indicating that I am on the admin dashboard' do
-        #US 19
-        visit '/admin'
 
-        expect(page).to have_content("Little Etsy Shop")
-        expect(page).to have_content("Admin Dashboard")
-        expect("Little Etsy Shop").to appear_before("Admin Dashboard")
-      end
-
-        # US 20, Admin Dashboard Links
-      it "has link to admin merchants index (/admin/merchants)" do
-        visit "/admin"
-        
-        expect(page).to have_link("Merchants")
-
-        click_link("Merchants")
-
-        expect(current_path).to eq("/admin/merchants")
-      end
-
-      it "has link to admin invoices index (/admin/invoices)" do
-        visit "/admin"
-        
-        expect(page).to have_link("Invoices")
-
-        click_link("Invoices")
-        
-        expect(current_path).to eq("/admin/invoices")
-      end
-
-      # US 21, Admin Dashboard Statistics - Top Customers
-      it 'gives names of the top 5 customers' do
-        visit '/admin'
-    
-        expect(page).to have_content(@customer1.full_name)
-        expect(page).to have_content(@customer3.full_name)
-        expect(page).to have_content(@customer4.full_name)
-        expect(page).to have_content(@customer5.full_name)
-        expect(page).to have_content(@customer6.full_name)
-        expect(page).to_not have_content(@customer2.full_name)
-      end
-
-      it 'gives number of successful transactions they have conducted' do
-        visit '/admin'
- 
-        expect(page).to have_content("#{@customer1.full_name}: 3 successful orders")
-        expect(page).to have_content("#{@customer3.full_name}: 2 successful orders")
-        expect(page).to have_content("#{@customer4.full_name}: 2 successful orders")
-        expect(page).to have_content("#{@customer5.full_name}: 2 successful orders")
-        expect(page).to have_content("#{@customer6.full_name}: 1 successful orders")
-        expect(page).to_not have_content("#{@customer2.full_name}")
-      end
-
-      # US 22, Admin Dashboard Incomplete Invoices
-      it 'has a section for incomplete invoices' do
-        visit '/admin'
-
-        expect(page).to have_content("Incomplete Invoices")
-        within('section', :text => "Incomplete Invoices") do
-          expect(page).to have_link("#{@invoice8.id}")
-          expect(page).to have_link("#{@invoice9.id}")
-          expect(page).to_not have_link("#{@invoice7.id}")
-          expect(page).to_not have_link("#{@invoice10.id}")
-          expect(page).to have_link("#{@invoice11.id}")
-        end
-
-        click_link("#{@invoice8.id}")
-
-        expect(current_path).to eq("/admin/invoices/#{@invoice8.id}")
-      end
-
-      # US 23, Admin Dashboard Invoices sorted by least recent
-      it 'has invoice created date ordered by oldest to newest' do
-        visit '/admin'
-
-        expect(page).to have_content("Incomplete Invoices")
-        within('section', :text => "Incomplete Invoices") do
-          expect("#{@invoice9.id}").to appear_before("#{@invoice11.id}")
-          expect("#{@invoice11.id}").to appear_before("#{@invoice8.id}")
-          expect(page).to have_content("#{@invoice9.id}: Created Wednesday, March 7, 2012")
-          expect(page).to have_content("#{@invoice11.id}: Created Thursday, March 8, 2012")
-          expect(page).to have_content("#{@invoice8.id}: Created Tuesday, March 13, 2012")
-        end
-
+      # US 33, Admin Invoice Show Page
+      it 'gives information related to invoice' do
+        visit "/admin/invoices/#{@invoice9.id}"
+        save_and_open_page
+        expect(page).to have_content(@invoice9.status)
+        expect(page).to have_content(@invoice9.id)
+        expect(page).to have_content("Created Wednesday, March 7, 2012")
+        expect(page).to have_content(@customer7.full_name)
       end
     end
   end

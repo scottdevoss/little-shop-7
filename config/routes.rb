@@ -21,7 +21,9 @@ Rails.application.routes.draw do
     resources :items, only: [:edit, :update], controller: "merchant_items"
     resources :invoices, only: [:show], controller: "merchant_invoices"
   end
-  get "/merchants/:id/invoices", to: "merchant_invoices#show"
+  get "/merchants/:id/invoices", to: "merchant_invoices#index"
+
+  resources :items
 
   get "/admin", to: "admin#index"
    

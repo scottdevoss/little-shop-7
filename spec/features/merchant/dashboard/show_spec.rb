@@ -30,7 +30,6 @@ RSpec.describe "Merchant Dashboard", type: :feature do
     @transaction_6 = Transaction.create!(credit_card_number: 123456789, credit_card_expiration_date: "11/26", result: 0, invoice_id: @invoice_6.id)
     @transaction_7 = Transaction.create!(credit_card_number: 123456789, credit_card_expiration_date: "11/26", result: 1, invoice_id: @invoice_7.id)
     @item1 = Item.create!(
-      id: 1,
       name: "Item Qui Esse",
       description:
       "Nihil autem sit odio inventore deleniti.",
@@ -38,7 +37,6 @@ RSpec.describe "Merchant Dashboard", type: :feature do
       merchant_id: @merchant1.id
       )
       @item2 = Item.create!( 
-        id: 2,
         name: "Item Autem Minima",
         description:
         "Cumque consequuntur ad.",
@@ -46,14 +44,13 @@ RSpec.describe "Merchant Dashboard", type: :feature do
         merchant_id: @merchant1.id
       )
       @item3 = Item.create!(
-        id: 3,
         name: "Item Ea Voluptatum",
         description:
         "Sunt officia eum qui molestiae. Nesciunt quidem cupiditate reiciendis est commodi non. Atque eveniet sed. Illum excepturi praesentium reiciendis voluptatibus eveniet odit perspiciatis. Odio optio nisi rerum nihil ut.",
         unit_price: 32301,
         merchant_id: @merchant1.id
       )
-    @customer1 = Customer.create!(id: 1, first_name: "Alan", last_name: "Smith")
+    @customer1 = Customer.create!(first_name: "Alan", last_name: "Smith")
 
     @invoice_item1 = InvoiceItem.create!(
       item_id: @item1.id,

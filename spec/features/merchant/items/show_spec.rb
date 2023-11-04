@@ -4,7 +4,6 @@ RSpec.describe "Merchant Item Show Page", type: :feature do
   before(:each) do
     @merchant1 = Merchant.create!(name: "Hannah's Handbags")
     @item1 = Item.create!(
-      id: 1,
       name: "Item Qui Esse",
       description:
       "Nihil autem sit odio inventore deleniti.",

@@ -23,21 +23,20 @@ RSpec.describe "Admin Merchants Index", type: feature do
       expect(page).to have_button("Disable")
       click_button "Disable"
     end
-
-    expect(page).to have_content("The status has been disabled")
     
+    expect(page).to have_content("The status has been disabled")
     within "#index-#{merchant.id}" do 
     expect(page).to_not have_link(merchant.name)
     expect(page).to have_button("Enable")
     click_button "Enable"
   end
   
-    expect(page).to have_content("The status has been enabled")
-
-    within "#index-#{merchant.id}" do
-      expect(page).to have_link(merchant.name)
-      expect(page).to have_button("Disable")
-    end
-  end
+  expect(page).to have_content("The status has been enabled")
   
+  within "#index-#{merchant.id}" do
+  expect(page).to have_link(merchant.name)
+  expect(page).to have_button("Disable")
+end
+end
+
 end 

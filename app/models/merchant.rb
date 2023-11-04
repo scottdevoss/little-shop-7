@@ -8,6 +8,10 @@ class Merchant < ApplicationRecord
     Customer.select('customers.*, COUNT(transactions.id) as success_transactions').joins(invoices: :transactions).where(transactions: { result: "success" }).group('customers.id').order('success_transactions DESC').limit(5)
   end
 
+  def top_5_items
+    Item.select("items.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue").joins(invoice_items: { invoice: :transactions }).where(transactions: { result: "success" }).group("items.id").order("revenue DESC").limit(5)
+  end
+
   def button_text
     return "Disable" if status == "enabled"
     "Enable"

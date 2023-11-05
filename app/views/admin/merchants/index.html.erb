@@ -1,11 +1,29 @@
-<h1>Admin: Merchants Index</h1>
-<div class="container">
-  <% @merchants.sort_by_name.each do |merchant| %>
-    <div id=<%= "index-#{merchant.id}" %>>
-      <%= link_to_if(merchant.enabled?, merchant.name, admin_merchant_path(merchant.id)) %>
-        <%= button_to merchant.button_text, admin_merchant_path(merchant.id), 
-          form: {style: "display:inline-block; margin-bottom: 10px; margin-left: 10px"},
-          params: {status: merchant.status}, method: :patch %>
-    </div>
-  <% end %>
-</div>
+<h1>Admin Merchants Index</h1>
+  <%= link_to "Create a new merchant", new_admin_merchant_path %>
+  <section style="display:inline" class="container enabled">
+    <h2>Enabled Merchants</h2>
+      <% @merchants.sort_by_name.each do |merchant| %>
+        <% unless merchant.status == "disabled" %>
+          <div style="margin-bottom:20px" id=<%= "index-#{merchant.id}" %>>
+            <%= link_to_if(merchant.enabled?, merchant.name, admin_merchant_path(merchant.id)) %>
+              <%= button_to merchant.button_text, admin_merchant_path(merchant.id), 
+                form: {style: "display:inline; margin-left: 10px"},
+                params: {status: merchant.status}, method: :patch %>
+          </div>
+        <% end %>
+      <% end %>
+  </section>
+  <br>
+  <section style="display:inline" class="container disabled">
+    <h2>Disabled Merchants</h2>
+      <% @merchants.sort_by_name.each do |merchant| %>
+        <% unless merchant.status == "enabled" %>
+          <div style="align-items:top; margin-bottom:20px" id=<%="index-#{merchant.id}" %>>
+            <%= merchant.name %>
+            <%= button_to merchant.button_text, admin_merchant_path(merchant.id),
+              form: {style: "display:inline; margin-left: 10px"},
+              params: {status: merchant.status}, method: :patch %>
+          </div>
+        <% end %>
+      <% end %>
+  </section>

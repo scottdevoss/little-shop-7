@@ -29,4 +29,24 @@ class Admin::MerchantsController < ApplicationController
       end
     end
   end
+
+  def new 
+
+  end
+
+  def create 
+    merchant = Merchant.new({name: merchant_params[:name]})
+    if merchant.save
+      redirect_to admin_merchants_path
+    else
+      flash[:alert] = "There was an error and the merchant was not saved to the system."
+    end
+  end
+
+  private
+
+  def merchant_params
+    params.permit(:name)
+  end
+  
 end

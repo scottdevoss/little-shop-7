@@ -43,7 +43,6 @@ RSpec.describe 'admin invoices show page' do
       # US 33, Admin Invoice Show Page
       it 'gives information related to invoice' do
         visit "/admin/invoices/#{@invoice9.id}"
-        
         expect(page).to have_content(@invoice9.status)
         expect(page).to have_content(@invoice9.id)
         expect(page).to have_content("Created Wednesday, March 7, 2012")

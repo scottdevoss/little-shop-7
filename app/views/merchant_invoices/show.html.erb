@@ -1,0 +1,15 @@
+<h1>Merchant Invoice Show Page</h1>
+
+<h3>ID: <%= @invoice.id %></h3>
+<h3>Status: <%= @invoice.status %></h3>
+<h3>Created on: <%= @invoice.creation_date %></h3>
+<h3>Customer: <%= @invoice.customer_name %></h3>
+
+<h2>Items On This Invoice</h2>
+
+<% @invoice.invoice_items.each do |invoice_item| %>
+  <h3>Item Name: <%= invoice_item.item.name %></h3>
+  <h3>Quantity: <%= invoice_item.quantity %></h3>
+  <h3>Unit Price: <%= invoice_item.unit_price %></h3>
+  <h3>Status: <%= invoice_item.status %></h3>
+<% end %>

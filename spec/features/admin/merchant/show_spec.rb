@@ -4,6 +4,7 @@ RSpec.describe "Admin Merchant Show Page" do
   it "a user can click on any Merchant in Admin Merchant Index to get taken to that Merchan'ts Show Page" do 
     # as an admin
     merchant = Merchant.create!({name: "Schroeder-Jerde"})
+    merchant.update!({status: 1})
 
     visit "/admin/merchants"
 

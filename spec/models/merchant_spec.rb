@@ -144,4 +144,55 @@ RSpec.describe Merchant, type: :model do
       end
     end
   end
+
+  describe "#button_text" do 
+    it "if merchant status is 'enabled' it returns 'Disable,' otherwise it returns 'enable'" do 
+      merchants = create_list(:merchant, 2)
+      merchant_1 = merchants.first
+      merchant_2 = merchants.last
+      merchant_2.update!({status: 1})
+
+      expect(merchant_1.button_text).to eq("Enable")
+      expect(merchant_2.button_text).to eq("Disable")
+    end
+  end
+
+  describe "#enabled?" do
+    before(:each) do 
+     end
+    it "returns true if the merchan's status is 'enabled' and false if merchant status is 'disabled'" do 
+      merchants = create_list(:merchant, 2)
+      merchant_1 = merchants.first
+      merchant_2 = merchants.last
+      merchant_2.update!({status: 1})
+
+      expect(merchant_1.enabled?).to eq(false)
+      expect(merchant_2.enabled?).to eq(true)
+    end
+  end
+
+  describe "#toggle_status" do 
+    it "returns the integer 0 if merchant status is 'enabled' and integer value 1 if merchant status is 'disabled'" do 
+      merchants = create_list(:merchant, 2)
+      merchant_1 = merchants.first
+      merchant_2 = merchants.last
+      merchant_2.update!({status: 1})
+
+      expect(merchant_1.toggle_status).to eq(1)
+      expect(merchant_2.toggle_status).to eq(0)
+    end
+  end
+
+  describe "@sort_by_name" do 
+    it "sorts the merchants alphabetically ascending by name" do
+      merchant_1 = Merchant.create!({name: "Wilson & Co."})
+      merchant_2 = Merchant.create!({name: "Andersen, Anderson, & Anderssen"})
+      merchant_3 = Merchant.create!({name: "Rumpke & Assoc., LLC"})
+      merchant_4 = Merchant.create!({name: "Liebowitz & Sons, Inc."})
+      merchant_5 = Merchant.create!({name: "McClaren Group"})
+
+      expect(Merchant.sort_by_name).to eq([merchant_2, merchant_4, merchant_5, merchant_3, merchant_1])
+    end
+  end
+
 end

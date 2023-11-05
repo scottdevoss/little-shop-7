@@ -83,11 +83,12 @@ RSpec.describe 'admin invoices show page' do
         visit "/admin/invoices/#{@invoice1.id}"
         
         @invoice1.invoice_items.each do |invoice_item|
-        
+
           expect(page).to have_content(invoice_item.item.name)
           expect(page).to have_content(invoice_item.quantity)
           expect(page).to have_content(invoice_item.unit_price)
           expect(page).to have_content(invoice_item.status)
+
           expect(page).to_not have_content(@item3.name)
           expect(page).to_not have_content(@item3.unit_price)
           expect(page).to_not have_content(@item4.name)

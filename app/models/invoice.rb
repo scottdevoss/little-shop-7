@@ -17,4 +17,12 @@ class Invoice < ApplicationRecord
   def customer_name
     "#{customer.first_name} #{customer.last_name}"
   end
+
+  def revenue
+    revenue = 0
+    self.invoice_items.each do |item|
+      revenue += (item.unit_price * item.quantity)
+    end
+    revenue
+  end
 end

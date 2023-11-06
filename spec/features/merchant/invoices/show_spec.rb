@@ -14,7 +14,7 @@ RSpec.describe 'merchant invoices show page' do
     @item7 = Item.create!(name: "Gold Necklace", unit_price: 1400, merchant_id: @merchant1.id, description: "10k Gold")
     @item8 = Item.create!(name: "Silver Necklace", unit_price: 1000, merchant_id: @merchant1.id, description: "Pure Silver")
     @item9 = Item.create!(name: "Hair Clip", unit_price: 25, merchant_id: @merchant1.id, description: "Black Plastic")
-    @item10 = Item.create!(name: "Hoop Earrings", unit_price: 125, merchant_id: @merchant2.id, description: "Bonze")
+    @item10 = Item.create!(name: "Hoop Earrings", unit_price: 125, merchant_id: @merchant2.id, description: "Bronze")
 
     @customer1 = Customer.create!(first_name: "John", last_name: "Jacobs")
     @customer2 = Customer.create!(first_name: "Susan", last_name: "Robinson")
@@ -36,7 +36,7 @@ RSpec.describe 'merchant invoices show page' do
     @invoice11 = Invoice.create!(status: 2, customer_id: @customer6.id)
     @invoice12 = Invoice.create!(status: 2, customer_id: @customer6.id)
 
-    @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 111, status: 1) 
+    @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 75107, status: 1) 
     @invoice_item2 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice2.id, quantity: 1, unit_price: 345, status: 1) 
     @invoice_item3 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice3.id, quantity: 1, unit_price: 420, status: 1) 
     @invoice_item4 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice4.id, quantity: 1, unit_price: 345, status: 1) 
@@ -48,6 +48,8 @@ RSpec.describe 'merchant invoices show page' do
     @invoice_item10 = InvoiceItem.create!(item_id: @item8.id, invoice_id: @invoice10.id, quantity: 1, unit_price: 126, status: 1)
     @invoice_item11 = InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice11.id, quantity: 1, unit_price: 123, status: 1)
     @invoice_item12 = InvoiceItem.create!(item_id: @item10.id, invoice_id: @invoice12.id, quantity: 1, unit_price: 345, status: 1)
+    @invoice_item13 = InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice1.id, quantity: 2, unit_price: 25, status: 1)
+    # @invoice_item14 = InvoiceItem.create!(item_id: @item10.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 345, status: 1)
 
     @transaction1 = Transaction.create!(invoice_id: @invoice1.id, credit_card_number: "1234567812345678", credit_card_expiration_date: "10/26", result: 0)
     @transaction2 = Transaction.create!(invoice_id: @invoice2.id, credit_card_number: "1234567812345678", credit_card_expiration_date: "10/26", result: 0)
@@ -87,6 +89,41 @@ RSpec.describe 'merchant invoices show page' do
         expect(page).to_not have_content(@item3.unit_price)
         expect(page).to_not have_content(@item4.name)
       end
+    end
+    it 'shows the total revenue' do
+      visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
+
+      expect(page).to have_content((@item1.unit_price + @item9.unit_price + @item9.unit_price))
+    end
+
+    it 'allows you to update item status' do
+      visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
+
+      expect(page).to have_select("status_#{@invoice_item1.id}", selected: "#{@invoice_item1.status}")
+      expect(page).to have_button("Update #{@item1.name}")
+      
+      select "pending", from: "status_#{@invoice_item1.id}"
+      click_button("Update #{@item1.name}")
+      @invoice_item1.reload
+      expect(@invoice_item1.status).to eq("pending")
+      
+      expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}")
+      expect(page).to have_select("status_#{@invoice_item1.id}", selected: "#{@invoice_item1.status}")
+      
+      select "packaged", from: "status_#{@invoice_item1.id}"
+      click_button("Update #{@item1.name}")
+      @invoice_item1.reload
+      expect(@invoice_item1.status).to eq("packaged")
+      
+      expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}")
+      expect(page).to have_select("status_#{@invoice_item1.id}", selected: "#{@invoice_item1.status}")
+      
+      select "shipped", from: "status_#{@invoice_item1.id}"
+      click_button("Update #{@item1.name}")
+      @invoice_item1.reload
+      expect(@invoice_item1.status).to eq("shipped")
+      
+      expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}")
     end
   end
 end 

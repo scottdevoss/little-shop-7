@@ -9,6 +9,8 @@ RSpec.describe Invoice, type: :model do
 
   describe "methods" do
     before :each do
+      @merchant1 = Merchant.create!(name: "Hannah's Handbags")
+
       @customer1 = Customer.create!(first_name: "Joey", last_name: "Ondricka")
       @customer2 = Customer.create!(first_name: "Cecelia", last_name: "Osinski")
       @customer3 = Customer.create!(first_name: "Mariah", last_name: "Toy")
@@ -28,6 +30,12 @@ RSpec.describe Invoice, type: :model do
       @invoice9 = Invoice.create!(status: "in progress", customer_id: @customer7.id, created_at: "2012-03-07 12:54:10 UTC", updated_at: "2012-03-07 12:54:10 UTC")
       @invoice10 = Invoice.create!(status: "cancelled", customer_id: @customer7.id, created_at: "2012-03-06 21:54:10 UTC", updated_at: "2012-03-06 21:54:10 UTC")
       @invoice11 = Invoice.create!(status: "in progress", customer_id: @customer7.id, created_at: "2012-03-08 20:54:10 UTC", updated_at: "2012-03-07 12:54:10 UTC")
+
+      @item1 = Item.create!(name: "Item Qui Esse", description: "Nihil autem sit odio inventore deleniti.", unit_price: 75107, merchant_id: @merchant1.id)
+      @item2 = Item.create!(name: "Item Autem Minima", description: "Cumque consequuntur ad.", unit_price: 67076, merchant_id: @merchant1.id)
+
+      @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 2, unit_price: 10)
+      @invoice_item2 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 20)
     end
 
     describe "#self.incomplete_by_creation_date" do
@@ -47,5 +55,15 @@ RSpec.describe Invoice, type: :model do
         expect(@invoice11.customer_name).to eq("Parker Daugherty")
       end
     end
+
+    describe '#revenue' do
+      it 'tells the total revenue of an invoice' do
+        expect(@invoice1.revenue).to eq(40)
+      
+      end
+    end
+
+
   end
 end
+

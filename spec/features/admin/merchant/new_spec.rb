@@ -12,10 +12,8 @@ RSpec.describe "creating a new Merchant" do
     new_merchant = create(:merchant)
 
     visit new_admin_merchant_path
-
     fill_in("Name", with: new_merchant.name)
     click_button("Submit")
-
     expect(current_path).to eq("/admin/merchants")
 
     within(".disabled") do 
@@ -26,6 +24,6 @@ RSpec.describe "creating a new Merchant" do
       expect(page).to have_button("Enable")
     end
 
-    # save_and_open_page
+
   end
 end 

@@ -12,8 +12,10 @@ namespace :csv_load do
       transaction.result = row['result']
       transaction.created_at = row['created_at']
       transaction.updated_at = row['updated_at']
+      transaction.invoice_id = row['invoice_id']
       transaction.save
     end
+    ActiveRecord::Base.connection.reset_pk_sequence!('transactions')
   end
   puts "transactions seeded"
 end

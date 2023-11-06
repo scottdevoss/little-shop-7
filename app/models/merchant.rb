@@ -31,4 +31,8 @@ class Merchant < ApplicationRecord
     order(:name)
   end
 
+  def self.top_5_by_revenue
+    top_5_list = Merchant.select("merchants.name, merchants.id, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue").joins(items: { invoice_items: { invoice: :transactions } }).where("transactions.result = ?", "0").group("merchants.id").limit(5).order("revenue DESC")
+  end
+
 end

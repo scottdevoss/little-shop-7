@@ -25,4 +25,13 @@ class Invoice < ApplicationRecord
     end
     revenue
   end
+
+  def self.alphabetical
+    Invoice.order(:id)
+  end
+
+  def self.most_recent
+    Invoice.order(created_at: :desc)
+  end
+
 end

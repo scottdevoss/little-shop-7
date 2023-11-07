@@ -2,7 +2,7 @@
   <%= link_to "Create a new merchant", new_admin_merchant_path %>
   <section style="display:inline" class="container enabled">
     <h2>Enabled Merchants</h2>
-      <% @merchants.sort_by_name.each do |merchant| %>
+      <% @merchants.each do |merchant| %>
         <% unless merchant.status == "disabled" %>
           <div style="margin-bottom:20px" id=<%= "index-#{merchant.id}" %>>
             <%= link_to_if(merchant.enabled?, merchant.name, admin_merchant_path(merchant.id)) %>
@@ -16,7 +16,7 @@
   <br>
   <section style="display:inline" class="container disabled">
     <h2>Disabled Merchants</h2>
-      <% @merchants.sort_by_name.each do |merchant| %>
+      <% @merchants.each do |merchant| %>
         <% unless merchant.status == "enabled" %>
           <div style="align-items:top; margin-bottom:20px" id=<%="index-#{merchant.id}" %>>
             <%= merchant.name %>
@@ -44,3 +44,6 @@
         </section>
       <% end %>
   </div>
+    <%= link_to "Sort A-Z", "/admin/merchants?sort=alphabetical" %>
+
+    <%= link_to "Sort By Most Recent", "/admin/merchants?sort=date" %>

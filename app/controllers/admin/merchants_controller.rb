@@ -1,6 +1,12 @@
 class Admin::MerchantsController < ApplicationController
   def index
-    @merchants = Merchant.all
+    if params[:sort] == "alphabetical"
+      @merchants = Merchant.alphabetical
+    elsif params[:sort] == "date"
+      @merchants = Merchant.most_recent
+    else
+      @merchants = Merchant.all
+    end
   end
 
   def show

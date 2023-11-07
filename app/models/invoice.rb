@@ -27,11 +27,11 @@ class Invoice < ApplicationRecord
   end
 
   def self.alphabetical
-    Invoice.order(:id)
+    order(:id)
   end
 
   def self.most_recent
-    Invoice.order(created_at: :desc)
+    order(created_at: :desc)
   end
 
 end

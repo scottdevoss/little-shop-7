@@ -27,8 +27,12 @@ class Merchant < ApplicationRecord
     1
   end
 
-  def self.sort_by_name 
+  def self.alphabetical
     order(:name)
+  end
+
+  def self.most_recent
+    order(created_at: :desc)
   end
 
   def self.top_5_by_revenue

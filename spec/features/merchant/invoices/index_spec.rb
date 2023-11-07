@@ -88,7 +88,7 @@ RSpec.describe 'merchant invoices index' do
 
     describe "sort by functionality" do
       it 'can sort alphabetically' do
-        visit "/admin/invoices"
+        visit "/merchant/invoices"
 
         expect("#{@invoice1.id}").to appear_before("#{@invoice2.id}")
         expect("#{@invoice2.id}").to appear_before("#{@invoice3.id}")
@@ -102,7 +102,7 @@ RSpec.describe 'merchant invoices index' do
       end
       
       it 'can sort by most recent date' do
-        visit "/admin/invoices"
+        visit "/merchant/invoices"
         
         expect("#{@invoice1.id}").to appear_before("#{@invoice2.id}")
         expect("#{@invoice2.id}").to appear_before("#{@invoice3.id}")

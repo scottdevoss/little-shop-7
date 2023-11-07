@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   get "/admin/invoices", to: "admin/invoices#index"
-  
+  get "/admin/merchants", to: "admin/merchants#index"
+
   namespace :admin do
-    resources :merchants, except: [:destroy], controller: "merchants"
+    resources :merchants, except: [:destroy, :index], controller: "merchants"
     resources :invoices, only: [:show]
   end
 

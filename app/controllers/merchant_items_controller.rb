@@ -1,22 +1,23 @@
 class MerchantItemsController < ApplicationController
   def index
-    @merchant = Merchant.find(params[:id])
+    @merchant = Merchant.find(params[:merchant_id])
     @items = @merchant.items
 
   end
 
   def show
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
     @merchant = @item.merchant
   end
 
   def new
-    @merchant = Merchant.find(params[:id])
+    @merchant = Merchant.find(params[:merchant_id])
   end
 
   def create
-    @merchant = Merchant.find(params[:id])
-    Item.create!(name: params[:name], description: params[:description], unit_price: params[:unit_price], merchant_id: params[:id])
+    # require 'pry'; binding.pry
+    @merchant = Merchant.find(params[:merchant_id])
+    Item.create!(name: params[:name], description: params[:description], unit_price: params[:unit_price], merchant_id: params[:merchant_id])
     redirect_to "/merchants/#{@merchant.id}/items"
   end
 

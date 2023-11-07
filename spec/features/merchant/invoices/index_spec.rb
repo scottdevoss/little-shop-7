@@ -89,7 +89,7 @@ RSpec.describe 'merchant invoices index' do
     describe "sort by functionality" do
       it 'can sort alphabetically' do
         visit "/merchants/#{@merchant1.id}/invoices"
-        save_and_open_page
+        
         expect("#{@invoice1.id}").to appear_before("#{@invoice2.id}")
         expect("#{@invoice2.id}").to appear_before("#{@invoice3.id}")
         expect("#{@invoice3.id}").to appear_before("#{@invoice4.id}")

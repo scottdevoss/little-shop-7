@@ -1,6 +1,8 @@
 class Merchant < ApplicationRecord
   has_many :items
   has_many :invoices, through: :items
+  has_many :invoice_items, through: :items
+  has_many :transactions, through: :invoices
 
   enum status: { "disabled": 0, "enabled": 1 }
 
@@ -32,7 +34,20 @@ class Merchant < ApplicationRecord
   end
 
   def self.top_5_by_revenue
-    top_5_list = Merchant.select("merchants.name, merchants.id, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue").joins(items: { invoice_items: { invoice: :transactions } }).where("transactions.result = ?", "0").group("merchants.id").limit(5).order("revenue DESC")
+    select("merchants.name, merchants.id, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue").joins(items: { invoice_items: { invoice: :transactions } }).where("transactions.result = ?", "0").group("merchants.id").limit(5).order("revenue DESC")
   end
 
+  def top_rev_date
+    rev_hash = invoice_items.reduce({}) do |hash, cur_item|
+      rev = cur_item.unit_price * cur_item.quantity
+      if hash[cur_item.updated_at]
+        hash[cur_item.updated_at] += rev
+        hash
+      else
+        hash[cur_item.updated_at] = rev
+        hash
+      end
+    end
+    rev_hash.max_by{ |date, revenue| revenue }
+  end
 end

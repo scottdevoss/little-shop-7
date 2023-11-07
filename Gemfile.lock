@@ -265,6 +265,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   capybara
+  date
   debug
   factory_bot_rails
   faker

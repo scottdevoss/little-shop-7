@@ -14,7 +14,6 @@
 </div>  
 
 <h2>Items On This Invoice</h2>
-
 <% @invoice.invoice_items.each do |invoice_item| %>
   <h3>Item Name: <%= invoice_item.item.name %></h3>
   <h3>Quantity: <%= invoice_item.quantity %></h3>

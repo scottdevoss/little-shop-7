@@ -86,12 +86,12 @@ RSpec.describe 'admin invoices index' do
           expect(page).to have_link("Sort By Most Recent")
 
           click_link("Sort By Most Recent")
-          save_and_open_page
+
           expect("#{@invoice1.id}").to appear_before("#{@invoice4.id}")
           expect("#{@invoice4.id}").to appear_before("#{@invoice8.id}")
           expect("#{@invoice8.id}").to appear_before("#{@invoice2.id}")
         end
-  end
+      end
     end
   end
 end

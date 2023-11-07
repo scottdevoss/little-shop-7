@@ -23,7 +23,6 @@ RSpec.describe "creating a new Merchant" do
     within("#index-#{new_merchant.id}") do
       expect(page).to have_button("Enable")
     end
-
-
   end
+  
 end 

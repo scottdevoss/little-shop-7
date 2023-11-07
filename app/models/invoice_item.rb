@@ -28,4 +28,13 @@ class InvoiceItem < ApplicationRecord
     self.save
   end
 
+  # def self.alphabetical
+  #   # take all invoice items and sort them by their item names
+  #   InvoiceItem.select("invoice_items.*, items.name").where('invoice_items.item_id = item.id').order('item.name')
+  # end
+
+  def self.most_recent
+    order(created_at: :desc)
+  end
+
 end

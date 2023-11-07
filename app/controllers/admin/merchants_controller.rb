@@ -35,11 +35,14 @@ class Admin::MerchantsController < ApplicationController
   end
 
   def create 
-    merchant = Merchant.new({name: merchant_params[:name]})
-    if merchant.save
+    # require 'pry'; binding.pry
+    if params[:name] != ""
+      merchant = Merchant.new({name: merchant_params[:name]})
+      merchant.save
       redirect_to admin_merchants_path
     else
       flash[:alert] = "There was an error and the merchant was not saved to the system."
+      redirect_to new_admin_merchant_path
     end
   end
 

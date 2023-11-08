@@ -1,5 +1,6 @@
 class Admin::InvoicesController < ApplicationController
   def index
+    # require 'pry'; binding.pry
     if params[:sort] == "alphabetical"
       @invoices = Invoice.alphabetical
     elsif params[:sort] == "date"

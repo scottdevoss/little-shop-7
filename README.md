@@ -4,6 +4,10 @@
 
 "Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
 
+## Summary of Work Completed
+- In this project, our team deployed an interactive website that made it easy for merchants and admins to manage inventory and fulfill customer invoices. To start, we build fairly basic dashboard, index and show pages to view and navigate between items and invoices. Then, we were able to build out more complex requests such as adding items and merchants, editing capabilities, including timestamps and calculating total revenue. 
+- We started adding styling to our pages to make it more user friendly and easier to read. If we were to add to this project with more time, we would like to spend more time styling. We realize we can go down a rabbit hole with styling, but this way it will feel more polished and professional. We would also like to revisit our controllers to make sure they do not have too much logic in them as well as models to make them as clean as possible. 
+
 ## Learning Goals
 - Practice designing a normalized database schema and defining model relationships
 - Utilize advanced routing techniques including namespacing to organize and group like functionality together.

@@ -254,4 +254,12 @@ RSpec.describe "Admin Merchants Index", type: feature do
     end
   end
 
-end 
+it "displays the highest revenue date next to each of the top 5 merchants" do
+    visit "dmin/merchants/"
+
+    expect(page).to have_content("$9,540.00")
+    # within ".flex-container-hdrs" do 
+      # expect("1,035.00").to appear_before("$837.00") 
+    # end
+  end
+end

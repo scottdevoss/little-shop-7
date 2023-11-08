@@ -1,6 +1,7 @@
 class Admin::MerchantsController < ApplicationController
   def index
     @merchants = Merchant.all
+    @dates = Merchant.top_rev_date
   end
 
   def show

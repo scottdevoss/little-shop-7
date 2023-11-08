@@ -5,10 +5,8 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-require "./spec/helper_methods"
+# require "./spec/helper_methods"
 
-load_test_data
 
-# Merchant.destroy_all 
 
 # FactoryBot.create_list(:merchant, 8)

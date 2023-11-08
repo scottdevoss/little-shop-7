@@ -37,17 +37,16 @@ class Merchant < ApplicationRecord
     select("merchants.name, merchants.id, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue").joins(items: { invoice_items: { invoice: :transactions } }).where("transactions.result = ?", "0").group("merchants.id").limit(5).order("revenue DESC")
   end
 
-  def top_rev_date
-    rev_hash = invoice_items.reduce({}) do |hash, cur_item|
-      rev = cur_item.unit_price * cur_item.quantity
-      if hash[cur_item.updated_at]
-        hash[cur_item.updated_at] += rev
-        hash
-      else
-        hash[cur_item.updated_at] = rev
-        hash
-      end
+  def self.top_rev_date
+    hash = {}
+    top_5_merch = Merchant.top_5_by_revenue
+    get_top_date = top_5_merch.each do |merch| 
+      top_date = merch.invoices.group("invoices.created_at")
+      .count.max_by { |count| count }.first 
+      hash[merch.name] = top_date.strftime("%m/%d/%Y")
+      hash 
     end
-    rev_hash.max_by{ |date, revenue| revenue }
   end
 end
+
+

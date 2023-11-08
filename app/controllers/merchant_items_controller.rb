@@ -20,7 +20,6 @@ class MerchantItemsController < ApplicationController
   end
 
   def create
-    # require 'pry'; binding.pry
     @merchant = Merchant.find(params[:merchant_id])
     Item.create!(name: params[:name], description: params[:description], unit_price: params[:unit_price], merchant_id: params[:merchant_id])
     redirect_to "/merchants/#{@merchant.id}/items"

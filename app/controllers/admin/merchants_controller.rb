@@ -41,7 +41,6 @@ class Admin::MerchantsController < ApplicationController
   end
 
   def create 
-    # require 'pry'; binding.pry
     if params[:name] != ""
       merchant = Merchant.new({name: merchant_params[:name]})
       merchant.save

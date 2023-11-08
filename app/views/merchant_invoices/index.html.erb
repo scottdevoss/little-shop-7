@@ -1,4 +1,6 @@
-<h2>Invoices with at least one item</h2>
+<div class="header">
+<h1>Invoices with at least one item</h1>
+</div>
 
 <% @merchant.invoices.each do |invoice| %>
     <% if !invoice.items.empty? %>

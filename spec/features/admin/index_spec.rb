@@ -43,9 +43,9 @@ RSpec.describe '/admin' do
         #US 19
         visit '/admin'
 
-        expect(page).to have_content("Little Etsy Shop")
+        expect(page).to have_content("Little Esty Shop")
         expect(page).to have_content("Admin Dashboard")
-        expect("Little Etsy Shop").to appear_before("Admin Dashboard")
+        expect("Little Esty Shop").to appear_before("Admin Dashboard")
       end
 
         # US 20, Admin Dashboard Links

@@ -30,4 +30,7 @@
       <li>ID: <%= link_to "#{invoice.id}", "/admin/invoices/#{invoice.id}" %>: Created <%= invoice.creation_date %></li>
     <% end %>
   </section>
+  <%= link_to "Sort A-Z", "/admin?sort=alphabetical" %>
+
+  <%= link_to "Sort By Most Recent", "/admin?sort=date" %>
 </div>  

@@ -63,7 +63,22 @@ RSpec.describe Invoice, type: :model do
       end
     end
 
+    describe "#alphabetical" do
+      it "returns invoices in order by id" do
+        expect(Invoice.alphabetical).to eq([@invoice1, @invoice2, @invoice3, @invoice4, @invoice5, @invoice6, @invoice7, @invoice8, @invoice9, @invoice10, @invoice11])
+      end
+    end
 
+    describe "#most_recent" do
+      it "returns invoices in order of most recently created" do
+        customer1 = Customer.create!(first_name: "Joey", last_name: "Ondricka")
+        invoice1 = Invoice.create!(status: "completed", customer_id: customer1.id, created_at: "2012-03-25 09:54:09 UTC", updated_at: "2012-03-25 09:54:09 UTC")
+        invoice2 = Invoice.create!(status: "completed", customer_id: customer1.id, created_at: "2012-03-10 05:54:09 UTC", updated_at: "2012-03-12 05:54:09 UTC")
+        invoice3 = Invoice.create!(status: "completed", customer_id: customer1.id, created_at: "2012-03-12 00:54:09 UTC", updated_at: "2012-03-10 00:54:09 UTC")
+        
+        expect(customer1.invoices.most_recent).to eq([invoice1, invoice3, invoice2])
+      end
+    end
   end
 end
 

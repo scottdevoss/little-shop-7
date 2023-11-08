@@ -240,7 +240,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
    describe "sort by functionality" do
     it 'can sort alphabetically' do
       visit "/merchants/#{@merchant1.id}/items"
-      save_and_open_page
+
       within('div.disabled-items') do
         expect("Item Qui Esse").to appear_before("Item Autem Minima")
         expect("Item Autem Minima").to appear_before("Item Ea Voluptatum")

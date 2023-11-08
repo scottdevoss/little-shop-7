@@ -122,7 +122,43 @@ RSpec.describe '/admin' do
           expect(page).to have_content("#{@invoice11.id}: Created Thursday, March 8, 2012")
           expect(page).to have_content("#{@invoice8.id}: Created Tuesday, March 13, 2012")
         end
+      end
 
+       # Extension 1-2
+      describe "sort by functionality" do
+        it 'can sort alphabetically' do
+          visit "/admin"
+          within('section', :text => "Incomplete Invoices") do
+            expect("#{@invoice9.id}").to appear_before("#{@invoice11.id}")
+            expect("#{@invoice11.id}").to appear_before("#{@invoice8.id}")
+          end
+
+          expect(page).to have_link("Sort A-Z")
+            
+          click_link("Sort A-Z")
+          
+          within('section', :text => "Incomplete Invoices") do
+            expect("#{@invoice8.id}").to appear_before("#{@invoice9.id}")
+            expect("#{@invoice9.id}").to appear_before("#{@invoice11.id}")
+          end
+        end
+        
+        it 'can sort by most recent date' do
+          visit "/admin"
+          within('section', :text => "Incomplete Invoices") do
+            expect("#{@invoice9.id}").to appear_before("#{@invoice11.id}")
+            expect("#{@invoice11.id}").to appear_before("#{@invoice8.id}")
+          end
+
+          expect(page).to have_link("Sort By Most Recent")
+
+          click_link("Sort By Most Recent")
+
+          within('section', :text => "Incomplete Invoices") do
+            expect("#{@invoice8.id}").to appear_before("#{@invoice11.id}")
+            expect("#{@invoice11.id}").to appear_before("#{@invoice9.id}")
+          end
+        end
       end
     end
   end

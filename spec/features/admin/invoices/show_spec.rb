@@ -103,20 +103,7 @@ RSpec.describe 'admin invoices show page' do
         expect(page).to have_content("Total Revenue: $150264")
       end
 
-      describe "sort by functionality" do
-        xit 'can sort alphabetically' do
-          visit "/admin/invoices/#{@invoice1.id}"
-          
-          expect("Item Qui Esse").to appear_before("Hoop Earrings")
-          expect("Hoop Earrings").to appear_before("Hair Clip")
-          expect(page).to have_link("Sort A-Z")
-  
-          click_link("Sort A-Z")
-
-          expect("Hair Clip").to appear_before("Hoop Earrings")
-          expect("Hoop Earrings").to appear_before("Item Qui Esse")
-        end
-        
+      describe "sort by functionality" do     
         it 'can sort by most recent date' do
           visit "/admin/invoices/#{@invoice1.id}"
           

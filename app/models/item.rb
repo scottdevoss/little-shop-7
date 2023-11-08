@@ -57,7 +57,6 @@ end
     end
   end
 
-
   def toggle_status
     if self.status == "disabled"
       self.status = "enabled"

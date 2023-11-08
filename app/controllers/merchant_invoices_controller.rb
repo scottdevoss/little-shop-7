@@ -1,6 +1,6 @@
 class MerchantInvoicesController < ApplicationController
   def index
-    @merchant = Merchant.find(params[:id])
+    @merchant = Merchant.find(params[:merchant_id])
     if params[:sort] == "alphabetical"
       @invoices = @merchant.invoices.alphabetical
     elsif params[:sort] == "date"

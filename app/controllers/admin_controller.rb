@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   def index
-    @customers = Customer.all
+    @topfivecustomers = Customer.top_five
     if params[:sort] == "alphabetical"
       @invoices = Invoice.alphabetical
     elsif params[:sort] == "date"

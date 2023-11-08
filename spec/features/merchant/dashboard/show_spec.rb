@@ -112,11 +112,26 @@ RSpec.describe "Merchant Dashboard", type: :feature do
           visit "/merchants/#{@merchant1.id}/dashboard"
           
           expect(page).to have_content("Top 5 Customers")
-          expect(page).to have_content("Susan Robinson Successful Transactions: 1")
-          expect(page).to have_content("Jessica Simpson Successful Transactions: 1")
-          expect(page).to have_content("Harry Potter Successful Transactions: 1")
-          expect(page).to have_content("Ron Weasley Successful Transactions: 1")
-          expect(page).to have_content("Nicole Johnson Successful Transactions: 1")
+          within("#top-five-#{@customer_2.id}") do
+            expect(page).to have_content("Susan Robinson")
+            expect(page).to have_content("Successful Orders: 1")
+          end
+          within("#top-five-#{@customer_3.id}") do
+            expect(page).to have_content("Jessica Simpson")
+            expect(page).to have_content("Successful Orders: 1")
+          end
+          within("#top-five-#{@customer_4.id}") do
+            expect(page).to have_content("Harry Potter")
+            expect(page).to have_content("Successful Orders: 1")
+          end
+          within("#top-five-#{@customer_5.id}") do
+            expect(page).to have_content("Ron Weasley")
+            expect(page).to have_content("Successful Orders: 1")
+          end
+          within("#top-five-#{@customer_6.id}") do
+            expect(page).to have_content("Nicole Johnson")
+            expect(page).to have_content("Successful Orders: 1")
+          end
           expect(page).to_not have_content("Jackie Chan")
           expect(page).to_not have_content("John Jacobs")
         end

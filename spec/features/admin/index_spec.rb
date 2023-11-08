@@ -83,12 +83,27 @@ RSpec.describe '/admin' do
 
       it 'gives number of successful transactions they have conducted' do
         visit '/admin'
- 
-        expect(page).to have_content("#{@customer1.full_name}: 3 successful orders")
-        expect(page).to have_content("#{@customer3.full_name}: 2 successful orders")
-        expect(page).to have_content("#{@customer4.full_name}: 2 successful orders")
-        expect(page).to have_content("#{@customer5.full_name}: 2 successful orders")
-        expect(page).to have_content("#{@customer6.full_name}: 1 successful orders")
+      
+        within("#top-five-#{@customer1.id}") do
+          expect(page).to have_content(@customer1.full_name)
+          expect(page).to have_content("Successful Orders: 3")
+        end
+        within("#top-five-#{@customer3.id}") do
+          expect(page).to have_content(@customer3.full_name)
+          expect(page).to have_content("Successful Orders: 2")
+        end
+        within("#top-five-#{@customer4.id}") do
+          expect(page).to have_content(@customer4.full_name)
+          expect(page).to have_content("Successful Orders: 2")
+        end
+        within("#top-five-#{@customer5.id}") do
+          expect(page).to have_content(@customer5.full_name)
+          expect(page).to have_content("Successful Orders: 2")
+        end
+        within("#top-five-#{@customer6.id}") do
+          expect(page).to have_content(@customer6.full_name)
+          expect(page).to have_content("Successful Orders: 1")
+        end
         expect(page).to_not have_content("#{@customer2.full_name}")
       end
 

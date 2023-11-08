@@ -1,0 +1,18 @@
+<br>
+
+<section style="display:inline" class="container disabled">
+  <div class="subhead">
+    <h2>Disabled Merchants</h2>
+  </div>
+
+    <% @merchants.each do |merchant| %>
+    <% unless merchant.status == "enabled" %>
+      <div style="align-items:top; margin-bottom:20px" id=<%="index-#{merchant.id}" %>>
+        <%= merchant.name %>
+        <%= button_to merchant.button_text, admin_merchant_path(merchant.id),
+          form: {style: "display:inline; margin-left: 10px"},
+          params: {status: merchant.status}, method: :patch %>
+      </div>
+    <% end %>
+  <% end %>
+</section> 

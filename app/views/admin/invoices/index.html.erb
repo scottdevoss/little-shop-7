@@ -12,4 +12,9 @@
       <li>ID: <%= link_to "#{invoice.id}", "/admin/invoices/#{invoice.id}" %></li>
     <% end %>
   </section>
+
 </div>  
+
+<%= link_to "Sort A-Z", "/admin/invoices?sort=alphabetical" %>
+
+<%= link_to "Sort By Most Recent", "/admin/invoices?sort=date" %>

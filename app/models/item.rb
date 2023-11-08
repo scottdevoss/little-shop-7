@@ -57,7 +57,6 @@ end
     end
   end
 
-
   def toggle_status
     if self.status == "disabled"
       self.status = "enabled"
@@ -65,5 +64,13 @@ end
       self.status = "disabled"
     end
     self.save
+  end
+
+  def self.alphabetical
+    order(:name)
+  end
+
+  def self.most_recent
+    order(created_at: :desc)
   end
 end

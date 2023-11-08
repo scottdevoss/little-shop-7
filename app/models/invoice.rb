@@ -45,4 +45,11 @@ class Invoice < ApplicationRecord
     end
   end
 
+  def sort_invoice_items(params)
+    if params[:sort] == "date"
+      @invoice_items = self.invoice_items.most_recent
+    else
+      @invoice_items = self.invoice_items
+    end
+  end
 end

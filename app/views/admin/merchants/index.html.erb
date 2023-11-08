@@ -1,7 +1,12 @@
+<div class="subhead">
 <h1>Admin Merchants Index</h1>
+</div>
+<div class="body">
   <%= link_to "Create a new merchant", new_admin_merchant_path %>
   <section style="display:inline" class="container enabled">
+  <div class="subhead">
     <h2>Enabled Merchants</h2>
+  </div>
       <% @merchants.each do |merchant| %>
         <% unless merchant.status == "disabled" %>
           <div style="margin-bottom:20px" id=<%= "index-#{merchant.id}" %>>
@@ -15,7 +20,9 @@
   </section>
   <br>
   <section style="display:inline" class="container disabled">
+  <div class="subhead">
     <h2>Disabled Merchants</h2>
+  </div>
       <% @merchants.each do |merchant| %>
         <% unless merchant.status == "enabled" %>
           <div style="align-items:top; margin-bottom:20px" id=<%="index-#{merchant.id}" %>>
@@ -29,7 +36,9 @@
   </section>
   <br>
   <div id="top-five-outer-container">
+  <div class="subhead">
     <h2>Top 5 Merchants by Total Revenue</h2>
+  </div>
     <div class="flex-container-hdrs">
       <h3 class="column-hdr">Merchant</h3>
       <h3 class="column-hdr">Revenue</h3>
@@ -47,3 +56,4 @@
     <%= link_to "Sort A-Z", "/admin/merchants?sort=alphabetical" %>
 
     <%= link_to "Sort By Most Recent", "/admin/merchants?sort=date" %>
+</div>

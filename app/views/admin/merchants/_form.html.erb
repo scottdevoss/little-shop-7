@@ -1,0 +1,6 @@
+<div class="body">
+  <%= form_with model: model, url: path, data: {turbo: false}, local: true do |f| %>
+    <%= f.text_field :name %>
+    <%= f.submit "Submit" %>
+  <% end %>
+</div>

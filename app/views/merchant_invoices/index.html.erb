@@ -1,13 +1,14 @@
-<div class="header">
+<div class="subhead">
 <h1>Invoices with at least one item</h1>
 </div>
 
-<% @invoices.each do |invoice| %>
-    <% if !invoice.items.empty? %>
-    <p> <%=link_to "#{invoice.id}", "/merchants/#{@merchant.id}/invoices/#{invoice.id}" %> 
+<div class="body">
+    <%= link_to "Sort A-Z", "/merchants/#{@merchant.id}/invoices?sort=alphabetical" %>
+    <%= link_to "Sort By Most Recent", "/merchants/#{@merchant.id}/invoices?sort=date" %>
+    
+    <% @invoices.each do |invoice| %>
+        <% if !invoice.items.empty? %>
+            <p> <%=link_to "#{invoice.id}", "/merchants/#{@merchant.id}/invoices/#{invoice.id}" %> 
         <% end %> </p> 
     <% end %>
-
-<%= link_to "Sort A-Z", "/merchants/#{@merchant.id}/invoices?sort=alphabetical" %>
-
-<%= link_to "Sort By Most Recent", "/merchants/#{@merchant.id}/invoices?sort=date" %>
+</div>

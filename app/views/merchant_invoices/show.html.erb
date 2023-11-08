@@ -1,26 +1,33 @@
-<div class="header">
+<div class="subhead">
 <h1>Merchant Invoice Show Page</h1>
 </div>
 
-<h3>ID: <%= @invoice.id %></h3>
-<h3>Status: <%= @invoice.status %></h3>
-<h3>Created on: <%= @invoice.creation_date %></h3>
-<h3>Customer: <%= @invoice.customer_name %></h3>
+<div class="body">
+  <div class="subhead">
+    <h2>ID: <%= @invoice.id %></h2>
+  </div>
 
-<h2>Items On This Invoice</h2>
+  <h3>Status: <%= @invoice.status %></h3>
+  <h3>Created on: <%= @invoice.creation_date %></h3>
+  <h3>Customer: <%= @invoice.customer_name %></h3>
 
-<% @invoice.invoice_items.each do |invoice_item| %>
-<section id="invoice-item_<%= invoice_item.id %>">
-  <h3>Item Name: <%= invoice_item.item.name %></h3>
-  <h3>Quantity: <%= invoice_item.quantity %></h3>
-  <h3>Unit Price: <%= invoice_item.unit_price %></h3>
-  <h3>Status</h3>
-<%= form_with url: "/merchants/#{invoice_item.merchant}/invoices/#{invoice_item.id}", method: :patch do %>
-  <h4>
-    <%= select_tag "status_#{invoice_item.id}", options_for_select(['pending', 'packaged', 'shipped'], invoice_item.status) %>
-    <%= submit_tag "Update #{invoice_item.item.name} Status" %>
-  </h4>
-<% end %>
-  </section>
-<% end %>
-<h4>Revenue: <%= @invoice.revenue %></h4>
+  <h2>Items On This Invoice</h2>
+
+  <% @invoice.invoice_items.each do |invoice_item| %>
+  <section id="invoice-item_<%= invoice_item.id %>">
+    <div class="subhead">
+      <h4>Item Name: <%= invoice_item.item.name %></h4>
+    </div>
+    <h5>Quantity: <%= invoice_item.quantity %></h5>
+    <h5>Unit Price: <%= invoice_item.unit_price %></h5>
+    <h5>Status</h5>
+  <%= form_with url: "/merchants/#{invoice_item.merchant}/invoices/#{invoice_item.id}", method: :patch do %>
+    <h4>
+      <%= select_tag "status_#{invoice_item.id}", options_for_select(['pending', 'packaged', 'shipped'], invoice_item.status) %>
+      <%= submit_tag "Update #{invoice_item.item.name} Status" %>
+    </h4>
+  <% end %>
+    </section>
+  <% end %>
+  <h4>Revenue: <%= @invoice.revenue %></h4>
+</div>

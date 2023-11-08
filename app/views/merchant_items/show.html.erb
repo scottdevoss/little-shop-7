@@ -1,7 +1,9 @@
-<div class="header">
+<div class="subhead">
 <h1>Name: <%= @item.name %></h1>
 </div>
 
-<h3>Description: <%= @item.description %></h3>
-<h3>Current Selling Price: <%= @item.unit_price %></h3>
-<h3><%= link_to "Update Item", edit_merchant_item_path(@merchant, @item) %></h3>
+<div class="body">
+  <h3>Description: <%= @item.description %></h3>
+  <h3>Current Selling Price: <%= @item.unit_price %></h3>
+  <h3><%= link_to "Update Item", edit_merchant_item_path(@merchant, @item) %></h3>
+</div>

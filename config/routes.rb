@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   get "/admin/invoices", to: "admin/invoices#index"
+  patch "/admin/invoices/:id", to: "admin/invoices#update"
   get "/admin/merchants", to: "admin/merchants#index"
   get "/admin", to: "admin#index"
 

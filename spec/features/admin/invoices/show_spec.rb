@@ -117,6 +117,38 @@ RSpec.describe 'admin invoices show page' do
           expect("Hair Clip").to appear_before("Item Qui Esse")
         end
       end
+
+      describe "status button on show page" do
+        it 'allows you to update the status' do
+          visit "/admin/invoices/#{@invoice1.id}"
+
+      expect(page).to have_select("status_#{@invoice1.id}", selected: "#{@invoice1.status}")
+      expect(page).to have_button("Update #{@invoice1.id}")
+      
+      select "in progress", from: "status_#{@invoice1.id}"
+      click_button("Update #{@invoice1.id}")
+      @invoice1.reload
+      expect(@invoice1.status).to eq("in progress")
+      
+      expect(current_path).to eq("/admin/invoices/#{@invoice1.id}")
+      expect(page).to have_select("status_#{@invoice1.id}", selected: "#{@invoice1.status}")
+      
+      select "cancelled", from: "status_#{@invoice1.id}"
+      click_button("Update #{@invoice1.id}")
+      @invoice1.reload
+      expect(@invoice1.status).to eq("cancelled")
+      
+      expect(current_path).to eq("/admin/invoices/#{@invoice1.id}")
+      expect(page).to have_select("status_#{@invoice1.id}", selected: "#{@invoice1.status}")
+      
+      select "completed", from: "status_#{@invoice1.id}"
+      click_button("Update #{@invoice1.id}")
+      @invoice1.reload
+      expect(@invoice1.status).to eq("completed")
+      
+      expect(current_path).to eq("/admin/invoices/#{@invoice1.id}")
+        end
+      end
     end
   end
 end

@@ -6,6 +6,12 @@
 
   <h2>ID: <%= @invoice.id %></h2>
   <h4>Status: <%= @invoice.status %></h4>
+  <%= form_with url: "/admin/invoices/#{@invoice.id}", method: :patch do %>
+        <h4>
+          <%= select_tag "status_#{@invoice.id}", options_for_select(['cancelled', 'in progress', 'completed'], @invoice.status) %>
+          <%= submit_tag "Update #{@invoice.id} Status" %>
+        </h4>
+      <% end %>
   <h4>Customer Name: <%= @invoice.customer_name %></h4>
   <h5>Created <%= @invoice.creation_date %></h5>
 

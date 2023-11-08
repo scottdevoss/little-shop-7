@@ -34,4 +34,9 @@ class Invoice < ApplicationRecord
     order(created_at: :desc)
   end
 
+  def change_status(new_status)
+    self.status = new_status
+    self.save
+  end
+
 end

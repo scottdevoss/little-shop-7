@@ -141,29 +141,45 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
         expect(page).to have_content("Enabled Items")
         expect(page).to have_content("Disabled Items")
     end
+    
     it 'has items divided by section' do
       visit "/merchants/#{@merchant1.id}/items"
+
       expect("Enabled Items").to appear_before("Disabled Items")
-      expect("Disabled Items").to appear_before(@item1.name)
-      expect("Disabled Items").to appear_before(@item2.name)
-      expect("Disabled Items").to appear_before(@item3.name)
-      expect("Disabled Items").to appear_before(@item5.name)
+      within('div.disabled-items') do
+        expect(page).to have_content(@item1.name)
+        expect(page).to have_content(@item2.name)
+        expect(page).to have_content(@item3.name)
+        expect(page).to have_content(@item5.name)
+      end
     end
+    
     it 'clicks the button to change the status section of the item' do
       visit "merchants/#{@merchant1.id}/items"
-      expect("Disabled Items").to appear_before(@item1.name)
       
       find_button("submit-#{@item1.id}").click
-      expect(@item1.name).to appear_before("Disabled Items")
+
+      within('section.enabled-items') do
+        expect(page).to have_content(@item1.name)
+      end
       
       find_button("submit-#{@item2.id}").click
-      expect(@item2.name).to appear_before("Disabled Items")
+
+      within('section.enabled-items') do
+        expect(page).to have_content(@item2.name)
+      end
       
       find_button("submit-#{@item3.id}").click
-      expect(@item3.name).to appear_before("Disabled Items")
+
+      within('section.enabled-items') do
+        expect(page).to have_content(@item3.name)
+      end
       
       find_button("submit-#{@item1.id}").click
-      expect("Disabled Items").to appear_before(@item1.name)
+
+      within('div.disabled-items') do
+        expect(page).to have_content(@item1.name)
+      end
     end
   end
       

@@ -1,22 +1,28 @@
-<div class="header">
-<h1><%= @merchant.name %></h1>
+<div class="subhead">
+  <h1><%= @merchant.name %></h1>
 </div>
 
-<section id="ready_to_ship">
-<h3>Items Ready To Ship</h3>
-<% @items.select { |item| item.packaged }.each do |item| %>
-  <p>
-    <%= item.name %>
-    <%= link_to "Invoice #{item.invoice_id}", "/merchants/#{item.merchant_id}/invoices/#{item.invoice_id}" %>
-    Creation Date: <%= item.invoice_date %>
-  </p>
-<% end %>
-</section>
+<div class="body">
+  <section id="ready_to_ship">
+    <div class="subhead">
+      <h3>Items Ready To Ship</h3>
+    </div>
+    <% @items.select { |item| item.packaged }.each do |item| %>
+      <p>
+        <%= item.name %>
+        <%= link_to "Invoice #{item.invoice_id}", "/merchants/#{item.merchant_id}/invoices/#{item.invoice_id}" %>
+        Creation Date: <%= item.invoice_date %>
+      </p>
+    <% end %>
+  </section>
 
-<p><%= link_to "Items", "/merchants/#{@merchant.id}/items" %></p>
-<p><%= link_to "Invoices", "/merchants/#{@merchant.id}/invoices" %></p>
+  <p><%= link_to "Items", "/merchants/#{@merchant.id}/items" %></p>
+  <p><%= link_to "Invoices", "/merchants/#{@merchant.id}/invoices" %></p>
 
-<h3>Top 5 Customers</h3>
-<% @merchant.top_5_customers.each do |customer| %>
-  <p><%= customer.first_name %> <%= customer.last_name %> Successful Transactions: <%= customer.success_transactions %></p>
-<% end %>
+  <div class="subhead">
+    <h3>Top 5 Customers</h3>
+  </div>
+  <% @merchant.top_5_customers.each do |customer| %>
+    <p><%= customer.first_name %> <%= customer.last_name %> Successful Transactions: <%= customer.success_transactions %></p>
+  <% end %>
+</div>

@@ -1,8 +1,13 @@
 class MerchantItemsController < ApplicationController
   def index
     @merchant = Merchant.find(params[:id])
-    @items = @merchant.items
-
+    if params[:sort] == "alphabetical"
+      @items = @merchant.items.alphabetical
+    elsif params[:sort] == "date"
+      @items = @merchant.items.most_recent
+    else
+      @items = @merchant.items
+    end
   end
 
   def show

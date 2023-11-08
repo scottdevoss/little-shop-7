@@ -110,7 +110,6 @@ RSpec.describe 'admin invoices show page' do
           expect("Item Qui Esse").to appear_before("Hoop Earrings")
           expect("Hoop Earrings").to appear_before("Hair Clip")
           expect(page).to have_link("Sort A-Z")
-          #binding.pry
   
           click_link("Sort A-Z")
 
@@ -126,7 +125,7 @@ RSpec.describe 'admin invoices show page' do
           expect(page).to have_link("Sort By Most Recent")
           
           click_link("Sort By Most Recent")
-          save_and_open_page
+
           expect("Hoop Earrings").to appear_before("Hair Clip")
           expect("Hair Clip").to appear_before("Item Qui Esse")
         end

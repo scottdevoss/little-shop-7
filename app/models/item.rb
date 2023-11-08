@@ -66,4 +66,12 @@ end
     end
     self.save
   end
+
+  def self.alphabetical
+    order(:name)
+  end
+
+  def self.most_recent
+    order(created_at: :desc)
+  end
 end

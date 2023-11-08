@@ -2,33 +2,33 @@
 <h1>Items</h1>
 </div>
 
-  <section id="enabled-items">
+<section id="enabled-items">
     <h2>Enabled Items</h2>
-<% @items.each do |item| %>
-    <p>
-      <% if item.enabled? == true %>
-      <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
-      <%= form_with url: item_path(item), method: :patch do %>
-        <%= submit_tag item.button_text, id: "submit-#{item.id}" %>
-      <% end %>
-      <% end %>
-    </p>
-  </section>
-<% end %>
+  <% @items.each do |item| %>
+      <p>
+        <% if item.enabled? == true %>
+        <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
+        <%= form_with url: item_path(item), method: :patch do %>
+          <%= submit_tag item.button_text, id: "submit-#{item.id}" %>
+        <% end %>
+        <% end %>
+      </p>
+  <% end %>
+</section>
 
 <h2>Disabled Items</h2>
-  <section id="disabled-items">
-<% @items.each do |item| %>
-    <p>
-      <% if item.enabled? != true %>
-      <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
-      <%= form_with url: item_path(item), method: :patch do %>
-        <%= submit_tag item.button_text, id: "submit-#{item.id}" %>
-      <% end %>
-      <% end %>
-    </p>
-  </section>
-<% end %>
+<div class="disabled-items">
+  <% @items.each do |item| %>
+      <p>
+        <% if item.enabled? != true %>
+        <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
+        <%= form_with url: item_path(item), method: :patch do %>
+          <%= submit_tag item.button_text, id: "submit-#{item.id}" %>
+        <% end %>
+        <% end %>
+      </p>
+  <% end %>
+</div>
 
 <%= link_to "Create A New Item", "/merchants/#{@merchant.id}/items/new" %>
 
@@ -40,3 +40,7 @@
     <p>Top selling date for <%= item.name %> was <%= Item.item_best_day(item).strftime('%-m/%d/%y') %>
   <% end %>
 </div>
+
+<%= link_to "Sort A-Z", "/merchants/#{@merchant.id}/items?sort=alphabetical" %>
+
+<%= link_to "Sort By Most Recent", "/merchants/#{@merchant.id}/items?sort=date" %>

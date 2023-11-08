@@ -195,6 +195,17 @@ RSpec.describe Merchant, type: :model do
     end
   end
 
+  describe "#most_recent" do
+    it "returns in order of most recently created" do
+      merchant_1 = Merchant.create!({name: "Wilson & Co."})
+      merchant_2 = Merchant.create!({name: "Andersen, Anderson, & Anderssen"})
+      merchant_3 = Merchant.create!({name: "Rumpke & Assoc., LLC"})
+      merchant_4 = Merchant.create!({name: "Liebowitz & Sons, Inc."})
+      merchant_5 = Merchant.create!({name: "McClaren Group"})
+      expect(Merchant.most_recent).to eq([merchant_5, merchant_4, merchant_3, merchant_2, merchant_1])
+    end
+  end
+
   describe "@top_5_by_revenue" do 
     before(:each) do 
       @merchant1 = Merchant.create!(name: "Hannah's Handbags")

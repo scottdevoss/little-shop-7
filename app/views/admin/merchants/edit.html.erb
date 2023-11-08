@@ -1,9 +1,10 @@
 <div class="subhead">
-<h1>Edit Merchant</h1>
+  <h1>Edit Merchant</h1>
 </div>
+
 <div class="body">
-<%= form_with url: "/admin/merchants/#{@merchant.id}", method: :patch, local: true do |f| %>
-  <%= f.text_field :name, value: @merchant.name %>
-  <%= f.submit "Submit" %>
-<% end %>
+  <%= form_with url: "/admin/merchants/#{@merchant.id}", method: :patch, local: true do |f| %>
+    <%= f.text_field :name, value: @merchant.name %>
+    <%= f.submit "Submit" %>
+  <% end %>
 </div>

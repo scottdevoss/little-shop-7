@@ -79,6 +79,15 @@ RSpec.describe Invoice, type: :model do
         expect(customer1.invoices.most_recent).to eq([invoice1, invoice3, invoice2])
       end
     end
+    describe "#change_status" do
+      it "toggles the status" do
+        expect(@invoice1.status).to eq("completed")
+        @invoice1.change_status("cancelled")
+        expect(@invoice1.status).to eq("cancelled")
+        @invoice1.change_status("in progress")
+        expect(@invoice1.status).to eq("in progress")
+      end
+    end
   end
 end
 

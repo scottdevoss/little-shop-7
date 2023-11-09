@@ -1,4 +1,3 @@
-
 class Merchant < ApplicationRecord
   has_many :items
   has_many :invoices, through: :items
@@ -38,11 +37,11 @@ class Merchant < ApplicationRecord
   end
 
   def date_most_rev 
-    invoices.select("DATE(invoices.created_at) as date, SUM(invoice_items.unit_price * invoice_items.quantity) AS revenue")
+    invoices.select("invoices.created_at, SUM(invoice_items.unit_price * invoice_items.quantity) AS revenue")
     .group("invoices.created_at")
     .order("revenue desc")
     .first
-    .date
+    .created_at
   end
 
 end

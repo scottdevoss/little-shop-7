@@ -79,6 +79,19 @@ RSpec.describe Invoice, type: :model do
         expect(customer1.invoices.most_recent).to eq([invoice1, invoice3, invoice2])
       end
     end
+
+    describe "#sort_invoice_items" do
+      it "sorts invoice items by most recent if sort param is 'date'" do
+        customer1 = Customer.create!(first_name: "Joey", last_name: "Ondricka")
+        invoice1 = Invoice.create!(status: "completed", customer_id: customer1.id, created_at: "2012-03-25 09:54:09 UTC", updated_at: "2012-03-25 09:54:09 UTC")
+        invoice_item1 = invoice1.invoice_items.create!(item_id: @item1.id, quantity: 2, unit_price: 10, created_at: "2012-03-15 09:54:09 UTC", updated_at: "2012-03-25 09:54:09 UTC")
+        invoice_item2 = invoice1.invoice_items.create!(item_id: @item2.id, quantity: 2, unit_price: 4, created_at: "2012-03-23 09:54:09 UTC", updated_at: "2012-03-25 09:54:09 UTC")
+        invoice_item3 = invoice1.invoice_items.create!(item_id: @item1.id, quantity: 2, unit_price: 10, created_at: "2012-03-29 09:54:09 UTC", updated_at: "2012-03-25 09:54:09 UTC")
+
+        expect(invoice1.sort_invoice_items(sort: "date").to_a).to eq([invoice_item3, invoice_item2, invoice_item1])
+        expect(invoice1.sort_invoice_items(sort: "not_date").to_a).to eq([invoice_item1, invoice_item2, invoice_item3])
+      end
+    end
     describe "#change_status" do
       it "toggles the status" do
         expect(@invoice1.status).to eq("completed")
@@ -90,4 +103,5 @@ RSpec.describe Invoice, type: :model do
     end
   end
 end
+
 

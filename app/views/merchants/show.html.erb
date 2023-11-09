@@ -10,7 +10,10 @@
     <% @items.select { |item| item.packaged }.each do |item| %>
       <p>
         <%= item.name %>
-        <%= link_to "Invoice #{item.invoice_id}", "/merchants/#{item.merchant_id}/invoices/#{item.invoice_id}" %>
+        <%= item.invoice_id.each do |id| %>
+          <%= link_to "Invoice #{id}", "/merchants/#{item.merchant_id}/invoices/#{id}" %>
+        <% end %>
+
         Creation Date: <%= item.invoice_date %>
       </p>
     <% end %>

@@ -22,7 +22,7 @@ end
   end
 
   def invoice_id
-    invoice_items.pluck(:invoice_id).join
+    invoice_items.pluck(:invoice_id)
   end
 
   def self.old_to_new

@@ -45,8 +45,17 @@ class Merchant < ApplicationRecord
     order(created_at: :desc)
   end
 
-  def self.top_5_by_revenue
-    select("merchants.name, merchants.id, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue").joins(items: { invoice_items: { invoice: :transactions } }).where("transactions.result = ?", "0").group("merchants.id").limit(5).order("revenue DESC")
+
+  def self.sort_by_name 
+    order(:name)
+  end
+
+  def self.alphabetical
+    order(:name)
+  end
+
+  def self.most_recent
+    order(created_at: :desc)
   end
 
   def self.top_5_by_revenue
@@ -56,7 +65,7 @@ class Merchant < ApplicationRecord
     .group("merchants.id")
     .limit(5)
     .order("revenue DESC")
-  end
+    
   
   def date_most_rev 
     invoices.select("invoices.created_at, SUM(invoice_items.unit_price * invoice_items.quantity) AS revenue")

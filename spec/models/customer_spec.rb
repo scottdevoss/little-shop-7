@@ -48,4 +48,18 @@ RSpec.describe Customer, type: :model do
       expect(customer.full_name).to eq("John Jacobs")
     end
   end
+
+  describe "#self.sort_invoices" do
+    it "sorts invoice by alphabetically if sort param is 'alphabetical'" do
+
+      customer1 = Customer.create!(first_name: "John", last_name: "Jacobs")
+      invoice1 = Invoice.create!(status: 0, customer_id: customer1.id, created_at: "2012-03-24 09:54:09 UTC", updated_at: "2012-03-24 09:54:09 UTC")
+      invoice2 = Invoice.create!(status: 2, customer_id: customer1.id, created_at: "2012-03-25 09:54:09 UTC", updated_at: "2012-03-24 09:54:09 UTC")
+      invoice3 = Invoice.create!(status: 2, customer_id: customer1.id, created_at: "2012-03-23 09:54:09 UTC", updated_at: "2012-03-24 09:54:09 UTC")
+      invoice4 = Invoice.create!(status: 2, customer_id: customer1.id, created_at: "2012-03-21 09:54:09 UTC", updated_at: "2012-03-24 09:54:09 UTC")
+
+      expect(Customer.sort_invoices(sort: "alphabetical").to_a).to eq([invoice1, invoice2])
+      expect(Customer.sort_invoices(sort: "date").to_a).to eq([invoice1, invoice2])
+    end
+  end
 end

@@ -92,6 +92,14 @@ RSpec.describe Invoice, type: :model do
         expect(invoice1.sort_invoice_items(sort: "not_date").to_a).to eq([invoice_item1, invoice_item2, invoice_item3])
       end
     end
+
+    # describe "#self.sorted" do
+    #   it "sorts invoice by alphabetically if sort param is 'alphabetical'" do
+    #     expect(@merchant1.invoices.sorted(sort: "alphabetical").to_a).to eq([@invoice1, @invoice1])
+    #     expect(@merchant1.invoices.sorted(sort: "date").to_a).to eq([@invoice1, @invoice1])
+    #     expect(@merchant1.invoices.sorted(sort: "not_date").to_a).to eq([@invoice1, @invoice1])
+    #   end
+    # end
   end
 end
 

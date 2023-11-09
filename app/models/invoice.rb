@@ -34,16 +34,16 @@ class Invoice < ApplicationRecord
     order(created_at: :desc)
   end
 
-  def self.sorted(params)
-    # require 'pry'; binding.pry
-    if params[:sort] == "alphabetical"
-      self.alphabetical
-    elsif params[:sort] == "date"
-      self.most_recent
-    else
-      self.all
-    end
-  end
+  # def self.sorted(params)
+  #   # require 'pry'; binding.pry
+  #   if params[:sort] == "alphabetical"
+  #     self.alphabetical
+  #   elsif params[:sort] == "date"
+  #     self.most_recent
+  #   else
+  #     self.all
+  #   end
+  # end
 
   def sort_invoice_items(params)
     if params[:sort] == "date"

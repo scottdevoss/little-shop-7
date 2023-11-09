@@ -24,6 +24,13 @@ RSpec.describe "creating a new Merchant" do
       expect(page).to have_button("Enable")
     end
 
-
   end
+  it "displays an error message if the merchant is not saved" do
+    visit new_admin_merchant_path
+    click_button("Submit")
+    
+    expect(current_path).to eq(new_admin_merchant_path)
+    expect(page).to have_content("There was an error and the merchant was not saved to the system.")
+  end
+  
 end 

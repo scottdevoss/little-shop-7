@@ -43,9 +43,9 @@ RSpec.describe '/admin' do
         #US 19
         visit '/admin'
 
-        expect(page).to have_content("Little Etsy Shop")
+        expect(page).to have_content("Little Esty Shop")
         expect(page).to have_content("Admin Dashboard")
-        expect("Little Etsy Shop").to appear_before("Admin Dashboard")
+        expect("Little Esty Shop").to appear_before("Admin Dashboard")
       end
 
         # US 20, Admin Dashboard Links
@@ -83,12 +83,27 @@ RSpec.describe '/admin' do
 
       it 'gives number of successful transactions they have conducted' do
         visit '/admin'
- 
-        expect(page).to have_content("#{@customer1.full_name}: 3 successful orders")
-        expect(page).to have_content("#{@customer3.full_name}: 2 successful orders")
-        expect(page).to have_content("#{@customer4.full_name}: 2 successful orders")
-        expect(page).to have_content("#{@customer5.full_name}: 2 successful orders")
-        expect(page).to have_content("#{@customer6.full_name}: 1 successful orders")
+      
+        within("#top-five-#{@customer1.id}") do
+          expect(page).to have_content(@customer1.full_name)
+          expect(page).to have_content("Successful Orders: 3")
+        end
+        within("#top-five-#{@customer3.id}") do
+          expect(page).to have_content(@customer3.full_name)
+          expect(page).to have_content("Successful Orders: 2")
+        end
+        within("#top-five-#{@customer4.id}") do
+          expect(page).to have_content(@customer4.full_name)
+          expect(page).to have_content("Successful Orders: 2")
+        end
+        within("#top-five-#{@customer5.id}") do
+          expect(page).to have_content(@customer5.full_name)
+          expect(page).to have_content("Successful Orders: 2")
+        end
+        within("#top-five-#{@customer6.id}") do
+          expect(page).to have_content(@customer6.full_name)
+          expect(page).to have_content("Successful Orders: 1")
+        end
         expect(page).to_not have_content("#{@customer2.full_name}")
       end
 
@@ -122,7 +137,43 @@ RSpec.describe '/admin' do
           expect(page).to have_content("#{@invoice11.id}: Created Thursday, March 8, 2012")
           expect(page).to have_content("#{@invoice8.id}: Created Tuesday, March 13, 2012")
         end
+      end
 
+       # Extension 1-2
+      describe "sort by functionality" do
+        it 'can sort alphabetically' do
+          visit "/admin"
+          within('section', :text => "Incomplete Invoices") do
+            expect("#{@invoice9.id}").to appear_before("#{@invoice11.id}")
+            expect("#{@invoice11.id}").to appear_before("#{@invoice8.id}")
+          end
+
+          expect(page).to have_link("Sort A-Z")
+            
+          click_link("Sort A-Z")
+          
+          within('section', :text => "Incomplete Invoices") do
+            expect("#{@invoice8.id}").to appear_before("#{@invoice9.id}")
+            expect("#{@invoice9.id}").to appear_before("#{@invoice11.id}")
+          end
+        end
+        
+        it 'can sort by most recent date' do
+          visit "/admin"
+          within('section', :text => "Incomplete Invoices") do
+            expect("#{@invoice9.id}").to appear_before("#{@invoice11.id}")
+            expect("#{@invoice11.id}").to appear_before("#{@invoice8.id}")
+          end
+
+          expect(page).to have_link("Sort By Most Recent")
+
+          click_link("Sort By Most Recent")
+
+          within('section', :text => "Incomplete Invoices") do
+            expect("#{@invoice8.id}").to appear_before("#{@invoice11.id}")
+            expect("#{@invoice11.id}").to appear_before("#{@invoice9.id}")
+          end
+        end
       end
     end
   end

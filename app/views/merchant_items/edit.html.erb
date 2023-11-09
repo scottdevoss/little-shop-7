@@ -1,16 +1,18 @@
-<div class="header">
-<h1>Update <%= @item.name %></h1>
+<div class="subhead">
+  <h1>Update <%= @item.name %></h1>
 </div>
 
-<%= form_with model: @item, url: merchant_item_path(@merchant, @item), data: {turbo: false} do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+<div class="body">
+  <%= form_with model: @item, url: merchant_item_path(@merchant, @item), data: {turbo: false} do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
 
-  <%= f.label :description %>
-  <%= f.text_field :description %>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
 
-  <%= f.label :unit_price %>
-  <%= f.text_field :unit_price %>
+    <%= f.label :unit_price %>
+    <%= f.text_field :unit_price %>
 
-  <%= f.submit "Update Item" %>
-<% end %>
+    <%= f.submit "Update Item" %>
+  <% end %>
+</div>

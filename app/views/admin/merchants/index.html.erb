@@ -40,8 +40,8 @@
     <h3>Top 5 Merchants</h3>
     <% @merchants.top_5_by_revenue.each do |merchant| %>
       <p class="merch-link"><%= link_to merchant.name, admin_merchant_path(merchant.id) %> </p>
-      <%= number_to_currency(merchant.revenue, unit: "$") %>
-      <%= merchant.date_most_rev %>
+        <%= number_to_currency(merchant.revenue, unit: "$") %>
+      </p><%= merchant.date_most_rev.strftime("%d/%m/%Y") %>
     <% end %>
   </div>
 </div>

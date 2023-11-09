@@ -1,33 +1,27 @@
-<div class="header">
-<h1>Little Etsy Shop</h1>
-</div>
-
 <div class="subhead">
 <h3>Admin Dashboard</h3>
 </div>
 
-<div class="subhead">
-  <div class="links">
-    <h3>Links</h3>
-    <h4><%= link_to "Merchants", "/admin/merchants" %></h4>
-    <h4><%= link_to "Invoices", "/admin/invoices" %></h4>
+<div class="body">
+  <div class="subhead">
+    <div class="links">
+      <h3>Links</h3>
+    </div>
   </div>
-</div>
+  <h4><%= link_to "Merchants", "/admin/merchants" %></h4>
+  <h4><%= link_to "Invoices", "/admin/invoices" %></h4>
 
-<div class="subhead">
-  <div class="top5">
-    <h3>Top 5 Customers By Successful Transactions</h3>
-    <% @customers.top_five.each do |customer| %>
-      <h4><%= customer.full_name %>: <%= customer.success_transactions %> successful orders</h4>
-    <% end %>
- </div>
-</div>   
+  <%= render partial: 'layouts/topfive' %>
 
-<div class="subhead">
   <section class="Incomplete Invoices">
-    <h3>Incomplete Invoices</h3>
+    <div class="subhead">
+      <h3>Incomplete Invoices</h3>
+    </div>  
+    <%= link_to "Sort A-Z", "/admin?sort=alphabetical" %>
+    <%= link_to "Sort By Most Recent", "/admin?sort=date" %>
     <% @invoices.incomplete_by_creation_date.each do |invoice| %>
       <li>ID: <%= link_to "#{invoice.id}", "/admin/invoices/#{invoice.id}" %>: Created <%= invoice.creation_date %></li>
     <% end %>
   </section>
-</div>  
+
+</div>

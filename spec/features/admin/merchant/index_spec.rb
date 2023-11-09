@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe "Admin Merchants Index", type: feature do
   before(:each) do 
-    @merchant1 = Merchant.create!(name: "Hannah's Handbags")
-    @merchant2 = Merchant.create!(name: "Arnold's Armoire")
-    @merchant3 = Merchant.create!(name: "Schroeder-Jerde")
-    @merchant4 = Merchant.create!(name: "Klein, Rempel and Jones")
+    @merchant1 = Merchant.create!(name: "Hannah's Handbags", created_at: "2012-03-11 15:54:10 UTC")
+    @merchant2 = Merchant.create!(name: "Arnold's Armoire", created_at: "2012-03-24 00:54:09 UTC")
+    @merchant3 = Merchant.create!(name: "Schroeder-Jerde", created_at: "2012-03-10 00:54:09 UTC")
+    @merchant4 = Merchant.create!(name: "Klein, Rempel and Jones", created_at: "2012-03-09 00:54:09 UTC")
     @merchant5 = Merchant.create!(name: "Pollich and Sons")
     @merchant6 = Merchant.create!(name: "Bosco, Howe and Davis")
     @merchant7 = Merchant.create!(name: "Kiehn Group")
@@ -251,6 +251,47 @@ RSpec.describe "Admin Merchants Index", type: feature do
     end
   end
 
+# Extension 1-2
+describe "sort by functionality" do
+  it 'can sort alphabetically' do
+    visit "/admin/merchants"
+    within ".disabled" do
+      expect(@merchant1.name).to appear_before(@merchant2.name)
+      expect(@merchant2.name).to appear_before(@merchant3.name)
+      expect(@merchant3.name).to appear_before(@merchant4.name)
+    end
+
+    expect(page).to have_link("Sort A-Z")
+      
+    click_link("Sort A-Z")
+    
+    within ".disabled" do
+      expect(@merchant2.name).to appear_before(@merchant1.name)
+      expect(@merchant1.name).to appear_before(@merchant4.name)
+      expect(@merchant4.name).to appear_before(@merchant3.name)
+    end
+  end
+  
+  it 'can sort by most recent date' do
+    visit "/admin/merchants"
+    within ".disabled" do
+      expect(@merchant1.name).to appear_before(@merchant2.name)
+      expect(@merchant2.name).to appear_before(@merchant3.name)
+      expect(@merchant3.name).to appear_before(@merchant4.name)
+    end
+
+    expect(page).to have_link("Sort By Most Recent")
+
+    click_link("Sort By Most Recent")
+
+    within ".disabled" do
+      expect(@merchant2.name).to appear_before(@merchant1.name)
+      expect(@merchant1.name).to appear_before(@merchant3.name)
+      expect(@merchant3.name).to appear_before(@merchant4.name)
+    end
+  end
+end
+
   it "displays the highest revenue date next to each of the top 5 merchants" do
     load_test_data
 
@@ -268,4 +309,4 @@ RSpec.describe "Admin Merchants Index", type: feature do
       end 
     end
   end 
-end
+end 

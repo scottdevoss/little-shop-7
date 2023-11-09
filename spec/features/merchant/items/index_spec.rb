@@ -9,21 +9,21 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
       description:
       "Nihil autem sit odio inventore deleniti.",
       unit_price: 75107,
-      merchant_id: @merchant1.id
+      merchant_id: @merchant1.id, created_at: Time.now - 2.days
     )
     @item2 = Item.create!( 
       name: "Item Autem Minima",
       description:
       "Cumque consequuntur ad.",
       unit_price: 67076,
-      merchant_id: @merchant1.id
+      merchant_id: @merchant1.id, created_at: Time.now - 4.days
     )
     @item3 = Item.create!(
       name: "Item Ea Voluptatum",
       description:
       "Sunt officia eum qui molestiae. Nesciunt quidem cupiditate reiciendis est commodi non. Atque eveniet sed. Illum excepturi praesentium reiciendis voluptatibus eveniet odit perspiciatis. Odio optio nisi rerum nihil ut.",
       unit_price: 32301,
-      merchant_id: @merchant1.id
+      merchant_id: @merchant1.id, created_at: Time.now - 3.days
     )
     @item4 = Item.create!(
       name: "Item Nemo Facere",
@@ -141,29 +141,45 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
         expect(page).to have_content("Enabled Items")
         expect(page).to have_content("Disabled Items")
     end
+    
     it 'has items divided by section' do
       visit "/merchants/#{@merchant1.id}/items"
+
       expect("Enabled Items").to appear_before("Disabled Items")
-      expect("Disabled Items").to appear_before(@item1.name)
-      expect("Disabled Items").to appear_before(@item2.name)
-      expect("Disabled Items").to appear_before(@item3.name)
-      expect("Disabled Items").to appear_before(@item5.name)
+      within('div.disabled-items') do
+        expect(page).to have_content(@item1.name)
+        expect(page).to have_content(@item2.name)
+        expect(page).to have_content(@item3.name)
+        expect(page).to have_content(@item5.name)
+      end
     end
+    
     it 'clicks the button to change the status section of the item' do
       visit "merchants/#{@merchant1.id}/items"
-      expect("Disabled Items").to appear_before(@item1.name)
       
       find_button("submit-#{@item1.id}").click
-      expect(@item1.name).to appear_before("Disabled Items")
+
+      within('section.enabled-items') do
+        expect(page).to have_content(@item1.name)
+      end
       
       find_button("submit-#{@item2.id}").click
-      expect(@item2.name).to appear_before("Disabled Items")
+
+      within('section.enabled-items') do
+        expect(page).to have_content(@item2.name)
+      end
       
       find_button("submit-#{@item3.id}").click
-      expect(@item3.name).to appear_before("Disabled Items")
+
+      within('section.enabled-items') do
+        expect(page).to have_content(@item3.name)
+      end
       
       find_button("submit-#{@item1.id}").click
-      expect("Disabled Items").to appear_before(@item1.name)
+
+      within('div.disabled-items') do
+        expect(page).to have_content(@item1.name)
+      end
     end
   end
       
@@ -232,6 +248,48 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
         expect(page).to have_content("Top selling date for #{@item8.name} was #{Item.item_best_day(@item8).strftime('%-m/%d/%y')}")
         expect(page).to have_content("Top selling date for #{@item9.name} was #{Item.item_best_day(@item9).strftime('%-m/%d/%y')}")
         expect(page).to have_content("Top selling date for #{@item10.name} was #{Item.item_best_day(@item10).strftime('%-m/%d/%y')}")
+      end
+    end
+  end
+
+   # Extension 1-2
+   describe "sort by functionality" do
+    it 'can sort alphabetically' do
+      visit "/merchants/#{@merchant1.id}/items"
+
+      within('div.disabled-items') do
+        expect("Item Qui Esse").to appear_before("Item Autem Minima")
+        expect("Item Autem Minima").to appear_before("Item Ea Voluptatum")
+        expect("Item Ea Voluptatum").to appear_before("Gold Ring")
+      end
+      expect(page).to have_link("Sort A-Z")
+
+      click_link("Sort A-Z")
+
+      within('div.disabled-items') do
+        expect("Gold Ring").to appear_before("Item Autem Minima")
+        expect("Item Autem Minima").to appear_before("Item Ea Voluptatum")
+        expect("Item Ea Voluptatum").to appear_before("Item Qui Esse")
+      end
+    end
+
+    it 'can sort by most recent date' do
+      visit "/merchants/#{@merchant1.id}/items"
+
+      within('div.disabled-items') do
+        expect("Item Qui Esse").to appear_before("Item Autem Minima")
+        expect("Item Autem Minima").to appear_before("Item Ea Voluptatum")
+        expect("Item Ea Voluptatum").to appear_before("Gold Ring")
+      end
+
+      expect(page).to have_link("Sort By Most Recent")
+
+      click_link("Sort By Most Recent")
+
+      within('div.disabled-items') do
+        expect("Gold Ring").to appear_before("Item Qui Esse")
+        expect("Item Qui Esse").to appear_before("Item Ea Voluptatum")
+        expect("Item Ea Voluptatum").to appear_before("Item Autem Minima")
       end
     end
   end

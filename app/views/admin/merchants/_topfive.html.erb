@@ -1,0 +1,18 @@
+  <div id="top-five-outer-container">
+    <div class="subhead">
+      <h2>Top 5 Merchants by Total Revenue</h2>
+    </div>
+    <div class="flex-container-hdrs">
+      <h3 class="column-hdr">Merchant</h3>
+      <h3 class="column-hdr">Revenue</h3>
+    </div>
+    <% @merchants.top_5_by_revenue.each do |merchant| %>
+      <section class="flex-container">
+        <div class=<%= "index-top-five" %> id=<%= "top-five-merch-#{merchant.id}" %>>
+          <%= link_to merchant.name, admin_merchant_path(merchant.id) %> 
+        </div>
+        <div class=<%= "index-top-five" %> id=<%= "top-five-rev-#{merchant.id}" %>><%= number_to_currency(merchant.revenue, unit: "$") %>
+        </div>
+      </section>
+    <% end %>
+  </div>

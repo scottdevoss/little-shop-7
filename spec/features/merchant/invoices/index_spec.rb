@@ -23,11 +23,11 @@ RSpec.describe 'merchant invoices index' do
     @customer5 = Customer.create!(first_name: "Ron", last_name: "Weasley")
     @customer6 = Customer.create!(first_name: "Nicole", last_name: "Johnson")
 
-    @invoice1 = Invoice.create!(status: 2, customer_id: @customer1.id)
-    @invoice2 = Invoice.create!(status: 2, customer_id: @customer2.id)
-    @invoice3 = Invoice.create!(status: 2, customer_id: @customer3.id)
-    @invoice4 = Invoice.create!(status: 2, customer_id: @customer4.id)
-    @invoice5 = Invoice.create!(status: 2, customer_id: @customer5.id)
+    @invoice1 = Invoice.create!(status: 2, customer_id: @customer1.id, created_at: "2012-03-24 15:54:10 UTC")
+    @invoice2 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "2012-03-10 00:54:09 UTC")
+    @invoice3 = Invoice.create!(status: 2, customer_id: @customer3.id, created_at: "2012-03-25 09:54:09 UTC")
+    @invoice4 = Invoice.create!(status: 2, customer_id: @customer4.id, created_at: "2012-03-12 05:54:09 UTC")
+    @invoice5 = Invoice.create!(status: 2, customer_id: @customer5.id, created_at: "2012-03-07 19:54:10 UTC")
     @invoice6 = Invoice.create!(status: 2, customer_id: @customer6.id)
     @invoice7 = Invoice.create!(status: 2, customer_id: @customer6.id)
     @invoice8 = Invoice.create!(status: 2, customer_id: @customer6.id)
@@ -86,11 +86,29 @@ RSpec.describe 'merchant invoices index' do
       expect(current_path).to eq("/merchants/#{@merchant2.id}/invoices/#{@invoice_item9.invoice_id}")
     end
 
+    describe "sort by functionality" do
+      it 'can sort alphabetically' do
+        visit "/merchants/#{@merchant1.id}/invoices"
+        
+        expect(page).to have_link("Sort A-Z")
 
+        click_link("Sort A-Z")
+        expect("#{@invoice1.id}").to appear_before("#{@invoice2.id}")
+        expect("#{@invoice2.id}").to appear_before("#{@invoice3.id}")
+        expect("#{@invoice3.id}").to appear_before("#{@invoice4.id}")
+      end
+      
+      it 'can sort by most recent date' do
+        visit "/merchants/#{@merchant1.id}/invoices"
 
+        expect(page).to have_link("Sort By Most Recent")
+        
+        click_link("Sort By Most Recent")
 
-
-
-
+        expect("#{@invoice3.id}").to appear_before("#{@invoice1.id}")
+        expect("#{@invoice1.id}").to appear_before("#{@invoice4.id}")
+        expect("#{@invoice4.id}").to appear_before("#{@invoice2.id}")
+      end
+    end
   end
 end

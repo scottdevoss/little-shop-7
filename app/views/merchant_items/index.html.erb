@@ -1,42 +1,55 @@
-<div class="header">
+<div class="subhead">
 <h1>Items</h1>
 </div>
 
-  <section id="enabled-items">
-    <h2>Enabled Items</h2>
-<% @items.each do |item| %>
-    <p>
-      <% if item.enabled? == true %>
-      <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
-      <%= form_with url: item_path(item), method: :patch do %>
-        <%= submit_tag item.button_text, id: "submit-#{item.id}" %>
-      <% end %>
-      <% end %>
-    </p>
+<div class="body">
+  <br>
+  <div class="top-5-items">
+    <div class="subhead">
+      <h2>Top 5 Most Popular Items:</h2>
+    </div>
+    <% @merchant.top_5_items.each do |item| %>
+      <h4><%= link_to "#{item.name}", merchant_item_path(item.merchant_id, item.id) %></h4>
+      <p>Total Revenue: $<%= Item.item_revenue(item) %></p>
+      <p>Top selling date for <%= item.name %> was <%= Item.item_best_day(item).strftime('%-m/%d/%y') %>
+    <% end %>
+  </div>
+
+  <section class="enabled-items">
+    <div class="subhead">
+      <h2>Enabled Items</h2>
+    </div>
+    <% @items.each do |item| %>
+        <p>
+          <% if item.enabled? == true %>
+            <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
+            <%= form_with url: item_path(item), method: :patch do %>
+              <%= submit_tag item.button_text, id: "submit-#{item.id}" %>
+            <% end %>
+          <% end %>
+        </p>
+    <% end %>
   </section>
-<% end %>
 
-<h2>Disabled Items</h2>
-  <section id="disabled-items">
-<% @items.each do |item| %>
-    <p>
-      <% if item.enabled? != true %>
-      <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
-      <%= form_with url: item_path(item), method: :patch do %>
-        <%= submit_tag item.button_text, id: "submit-#{item.id}" %>
-      <% end %>
-      <% end %>
-    </p>
-  </section>
-<% end %>
+  <div class="disabled-items">
+    <div class="subhead">
+      <h2>Disabled Items</h2>
+    </div>
+    <% @items.each do |item| %>
+        <p>
+          <% if item.enabled? != true %>
+          <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
+          <%= form_with url: item_path(item), method: :patch do %>
+            <%= submit_tag item.button_text, id: "submit-#{item.id}" %>
+          <% end %>
+          <% end %>
+        </p>
+    <% end %>
+  </div>
 
-<%= link_to "Create A New Item", "/merchants/#{@merchant.id}/items/new" %>
+  <%= link_to "Create A New Item", "/merchants/#{@merchant.id}/items/new" %>
 
-<h2>Top 5 Most Popular Items:</h2>
-<div class="top-5-items">
-  <% @merchant.top_5_items.each do |item| %>
-    <p><%= link_to "#{item.name}", merchant_item_path(item.merchant_id, item.id) %></p>
-    <p>Total Revenue: $<%= Item.item_revenue(item) %></p>
-    <p>Top selling date for <%= item.name %> was <%= Item.item_best_day(item).strftime('%-m/%d/%y') %>
-  <% end %>
+  <%= link_to "Sort A-Z", "/merchants/#{@merchant.id}/items?sort=alphabetical" %>
+
+  <%= link_to "Sort By Most Recent", "/merchants/#{@merchant.id}/items?sort=date" %>
 </div>

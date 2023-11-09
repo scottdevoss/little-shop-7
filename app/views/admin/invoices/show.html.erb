@@ -1,14 +1,32 @@
-<div class="header">
-<h1>Little Etsy Shop</h1>
-</div>
-
+<div class="body">
 <div class="subhead">
   <h3>Admin Invoice Show Page</h3>
 </div>
 
-<div class="subhead">
+
   <h2>ID: <%= @invoice.id %></h2>
   <h4>Status: <%= @invoice.status %></h4>
+  <%= form_with url: "/admin/invoices/#{@invoice.id}", method: :patch do %>
+        <h4>
+          <%= select_tag "status_#{@invoice.id}", options_for_select(['cancelled', 'in progress', 'completed'], @invoice.status) %>
+          <%= submit_tag "Update #{@invoice.id} Status" %>
+        </h4>
+      <% end %>
   <h4>Customer Name: <%= @invoice.customer_name %></h4>
   <h5>Created <%= @invoice.creation_date %></h5>
-</div>  
+
+
+<h2>Items On This Invoice</h2>
+<% @invoice_items.each do |invoice_item| %>
+  <h3>Item Name: <%= invoice_item.item.name %></h3>
+  <h3>Quantity: <%= invoice_item.quantity %></h3>
+  <h3>Unit Price: <%= invoice_item.unit_price %></h3>
+  <h3>Status: <%= invoice_item.status %></h3>
+<% end %>
+
+<%= "Total Revenue: $#{@invoice.revenue}" %>
+
+<%= link_to "Sort A-Z", "/admin/invoices/#{@invoice.id}?sort=alphabetical" %>
+
+<%= link_to "Sort By Most Recent", "/admin/invoices/#{@invoice.id}?sort=date" %>
+</div>

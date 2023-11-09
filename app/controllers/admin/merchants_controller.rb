@@ -1,6 +1,12 @@
 class Admin::MerchantsController < ApplicationController
   def index
-    @merchants = Merchant.all
+    if params[:sort] == "alphabetical"
+      @merchants = Merchant.alphabetical
+    elsif params[:sort] == "date"
+      @merchants = Merchant.most_recent
+    else
+      @merchants = Merchant.all
+    end
   end
 
   def show
@@ -35,11 +41,13 @@ class Admin::MerchantsController < ApplicationController
   end
 
   def create 
-    merchant = Merchant.new({name: merchant_params[:name]})
-    if merchant.save
+    if params[:name] != ""
+      merchant = Merchant.new({name: merchant_params[:name]})
+      merchant.save
       redirect_to admin_merchants_path
     else
       flash[:alert] = "There was an error and the merchant was not saved to the system."
+      redirect_to new_admin_merchant_path
     end
   end
 

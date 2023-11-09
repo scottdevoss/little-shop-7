@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <%= render partial: 'layouts/header' %>
+
     <title>LittleEstyShop7</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
@@ -19,16 +21,17 @@
 <% end %>
 
   <style>
-    .header {
-      font-family: Papyrus;
-      background-color: MediumSeaGreen;
-      padding: 20px;
-      text-align: center;
-    }
     .subhead {
       font-family: Helvetica;
-      border-left: 6px solid blue;
-      background-color: lightgrey;
+      background-color: #BF763E;
+      padding: 2px;
+    }
+
+    .body {
+      font-family: Helvetica;
+      background-color: #F1E4CF;
+      padding: 20px;
+      padding-bottom: 100px;
     }
   
   </style>
@@ -36,4 +39,5 @@
     
     <%= yield %>
   </body>
+  <%= render partial: 'layouts/footer' %>
 </html>

@@ -22,7 +22,7 @@ end
   end
 
   def invoice_id
-    invoice_items.pluck(:invoice_id).join
+    invoice_items.pluck(:invoice_id)
   end
 
   def self.old_to_new
@@ -30,33 +30,30 @@ end
   end
 
   def self.item_revenue(item)
-    joins(invoice_items: { invoice: :transactions }).where(transactions: { result: 'success' }).where("invoice_items.item_id = ?", item.id).sum("invoice_items.quantity * invoice_items.unit_price")
+    joins(invoice_items: { invoice: :transactions })
+    .where(transactions: { result: 'success' })
+    .where("invoice_items.item_id = ?", item.id)
+    .sum("invoice_items.quantity * invoice_items.unit_price")
   end
 
   def self.item_best_day(item)
-    select("MAX(invoice_items.quantity * invoice_items.unit_price) AS total_revenue, DATE(invoices.created_at) AS date").joins(invoice_items: { invoice: :transactions }).where("items.id = ?", item.id).group(:date).order("total_revenue DESC").first.date
+    select("MAX(invoice_items.quantity * invoice_items.unit_price) AS total_revenue, DATE(invoices.created_at) AS date").
+    joins(invoice_items: { invoice: :transactions })
+    .where("items.id = ?", item.id).group(:date)
+    .order("total_revenue DESC").first.date
   end
-
+  
   def button_text
     return "Disable" if status == "enabled"
     "Enable"
   end
 
-  # def enabled?
-  #   if status == "enabled"
-  #     self.toggle_status
-  #     return true
-  #   else
-  #     self.toggle_status
-  #     return false
-  #   end
-  # end
+
   def enabled?
     if self.status == "enabled"
       return true
     end
   end
-
 
   def toggle_status
     if self.status == "disabled"
@@ -65,5 +62,13 @@ end
       self.status = "disabled"
     end
     self.save
+  end
+
+  def self.alphabetical
+    order(:name)
+  end
+
+  def self.most_recent
+    order(created_at: :desc)
   end
 end

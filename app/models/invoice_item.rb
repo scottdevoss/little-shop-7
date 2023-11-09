@@ -9,23 +9,13 @@ class InvoiceItem < ApplicationRecord
     self.item.merchant.id
   end
 
-  # def name
-  #   self.item.name
-  # end
-
-  # def status_number
-  #   if self.status == 0
-  #     "pending"
-  #   elsif self.status == 1
-  #     "packaged"
-  #   else
-  #     "shipped"
-  #   end
-  # end
-
   def change_status(new_status)
     self.status = new_status
     self.save
+  end
+
+  def self.most_recent
+    order(created_at: :desc)
   end
 
 end

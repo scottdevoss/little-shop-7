@@ -4,62 +4,10 @@
 
 <div class="body">
   <%= link_to "Create a new merchant", new_admin_merchant_path %>
-  <section style="display:inline" class="container enabled">
-    <div class="subhead">
-      <h2>Enabled Merchants</h2>
-    </div>
 
-    <% @merchants.each do |merchant| %>
-      <% unless merchant.status == "disabled" %>
-        <div style="margin-bottom:20px" id=<%= "index-#{merchant.id}" %>>
-          <%= link_to_if(merchant.enabled?, merchant.name, admin_merchant_path(merchant.id)) %>
-            <%= button_to merchant.button_text, admin_merchant_path(merchant.id), 
-              form: {style: "display:inline; margin-left: 10px"},
-              params: {status: merchant.status}, method: :patch %>
-        </div>
-      <% end %>
-    <% end %>
-  </section>
-
-  <br>
-
-  <section style="display:inline" class="container disabled">
-    <div class="subhead">
-      <h2>Disabled Merchants</h2>
-    </div>
-
-    <% @merchants.each do |merchant| %>
-      <% unless merchant.status == "enabled" %>
-        <div style="align-items:top; margin-bottom:20px" id=<%="index-#{merchant.id}" %>>
-          <%= merchant.name %>
-          <%= button_to merchant.button_text, admin_merchant_path(merchant.id),
-            form: {style: "display:inline; margin-left: 10px"},
-            params: {status: merchant.status}, method: :patch %>
-        </div>
-      <% end %>
-    <% end %>
-  </section>
-
-  <br>
-
-  <div id="top-five-outer-container">
-    <div class="subhead">
-      <h2>Top 5 Merchants by Total Revenue</h2>
-    </div>
-    <div class="flex-container-hdrs">
-      <h3 class="column-hdr">Merchant</h3>
-      <h3 class="column-hdr">Revenue</h3>
-    </div>
-    <% @merchants.top_5_by_revenue.each do |merchant| %>
-      <section class="flex-container">
-        <div class=<%= "index-top-five" %> id=<%= "top-five-merch-#{merchant.id}" %>>
-          <%= link_to merchant.name, admin_merchant_path(merchant.id) %> 
-        </div>
-        <div class=<%= "index-top-five" %> id=<%= "top-five-rev-#{merchant.id}" %>><%= number_to_currency(merchant.revenue, unit: "$") %>
-        </div>
-      </section>
-    <% end %>
-  </div>
+  <%= render partial: 'enabled' %>
+  <%= render partial: 'disabled' %>
+  <%= render partial: 'topfive' %>
 
   <%= link_to "Sort A-Z", "/admin/merchants?sort=alphabetical" %>
   <%= link_to "Sort By Most Recent", "/admin/merchants?sort=date" %>

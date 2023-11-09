@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   def index
-    @customers = Customer.all
-    @invoices = @customers.sort_invoices(params)
+    @topfivecustomers = Customer.top_five
+    @invoices = Customer.sort_invoices(params)
   end
 end

@@ -97,10 +97,10 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  describe 'invoice_ids' do
-    it 'plucks the invoice id' do
-          
-      expect(@item1.invoice_ids).to eq([@invoice1.id, @invoice3.id, @invoice5.id])
+  #this originally had a typo
+  describe 'invoice_id' do
+    it 'plucks the invoice id' do          
+      expect(@item1.invoice_id).to eq([@invoice1.id, @invoice3.id, @invoice5.id])
     end
   end
 
@@ -172,6 +172,13 @@ RSpec.describe Item, type: :model do
       item7 = Item.create!(name: "Gold Necklace", unit_price: 1400, merchant_id: merchant1.id, description: "10k Gold", created_at: "2012-03-12 15:54:10 UTC")
       
       expect(merchant1.items.most_recent).to eq([item6, item7, item5])
+    end
+  end
+
+  #Where did this go?
+  describe "#old_to_new" do
+    it 'sorts them from oldest to newest' do
+      expect(Item.old_to_new.to_a).to eq([@item1, @item2, @item1, @item2, @item1, @item2, @item8, @item9, @item10, @item8, @item9, @item10])
     end
   end
 end

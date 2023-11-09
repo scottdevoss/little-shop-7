@@ -52,4 +52,9 @@ class Invoice < ApplicationRecord
       @invoice_items = self.invoice_items
     end
   end
+  def change_status(new_status)
+    self.status = new_status
+    self.save
+  end
+
 end

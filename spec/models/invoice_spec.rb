@@ -92,6 +92,15 @@ RSpec.describe Invoice, type: :model do
         expect(invoice1.sort_invoice_items(sort: "not_date").to_a).to eq([invoice_item1, invoice_item2, invoice_item3])
       end
     end
+    describe "#change_status" do
+      it "toggles the status" do
+        expect(@invoice1.status).to eq("completed")
+        @invoice1.change_status("cancelled")
+        expect(@invoice1.status).to eq("cancelled")
+        @invoice1.change_status("in progress")
+        expect(@invoice1.status).to eq("in progress")
+      end
+    end
   end
 end
 

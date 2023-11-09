@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   
+  patch "/admin/invoices/:id", to: "admin/invoices#update"
   resources :admin, only: [:index]
   
   namespace :admin do

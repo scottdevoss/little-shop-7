@@ -51,7 +51,7 @@ def load_test_data
   @customer3 = Customer.create!(first_name: "Jessica", last_name: "Simpson")
   @customer4 = Customer.create!(first_name: "Harry", last_name: "Potter")
   @customer5 = Customer.create!(first_name: "Ron", last_name: "Weasley")
-  @customer6 = Customer.create!(first_name: "Nicole", last_name: "Johnson")
+  @customer6 = Customer.create!(first_namse: "Nicole", last_name: "Johnson")
 
   @invoice1 = Invoice.create!(status: 2, customer_id: @customer1.id)
   @invoice2 = Invoice.create!(status: 2, customer_id: @customer2.id)
@@ -61,7 +61,7 @@ def load_test_data
   @invoice6 = Invoice.create!(status: 2, customer_id: @customer6.id)
   @invoice7 = Invoice.create!(status: 2, customer_id: @customer6.id)
   @invoice8 = Invoice.create!(status: 2, customer_id: @customer2.id)
-  @invoice9 = Invoice.create!(status: 2, customer_id: @customer2.id)
+  @invoice9 = Invoice.create!(status: 2, customer_id: @customer2.id,)
   @invoice10 = Invoice.create!(status: 2, customer_id: @customer3.id)
   @invoice10 = Invoice.create!(status: 2, customer_id: @customer4.id)
   @invoice10 = Invoice.create!(status: 2, customer_id: @customer3.id)

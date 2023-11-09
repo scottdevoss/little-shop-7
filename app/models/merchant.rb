@@ -1,3 +1,4 @@
+
 class Merchant < ApplicationRecord
   has_many :items
   has_many :invoices, through: :items
@@ -25,8 +26,7 @@ class Merchant < ApplicationRecord
   end
 
   def toggle_status
-    return 0 if enabled?
-    1
+    return 0 if enabled? 1
   end
 
   def self.sort_by_name 
@@ -37,16 +37,14 @@ class Merchant < ApplicationRecord
     select("merchants.name, merchants.id, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue").joins(items: { invoice_items: { invoice: :transactions } }).where("transactions.result = ?", "0").group("merchants.id").limit(5).order("revenue DESC")
   end
 
-  def self.top_rev_date
-    hash = {}
-    top_5_merch = Merchant.top_5_by_revenue
-    get_top_date = top_5_merch.each do |merch| 
-      top_date = merch.invoices.group("invoices.created_at")
-      .count.max_by { |count| count }.first 
-      hash[merch.name] = top_date.strftime("%m/%d/%Y")
-      hash 
-    end
+  def date_most_rev 
+    invoices.select("DATE(invoices.created_at) as date, SUM(invoice_items.unit_price * invoice_items.quantity) AS revenue")
+    .group("invoices.created_at")
+    .order("revenue desc")
+    .first
+    .date
   end
+
 end
 
 

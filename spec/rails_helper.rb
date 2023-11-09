@@ -10,6 +10,7 @@ require 'rspec/rails'
 require 'simplecov'
 SimpleCov.start
 require 'support/faker'
+require 'helper_methods'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 # Add additional requires below this line. Rails is not loaded until this point!
 

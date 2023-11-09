@@ -201,11 +201,8 @@ RSpec.describe "Admin Merchants Index", type: feature do
 
     within("#top-five-merch-#{@merchant9.id}") do
       expect(page).to have_link "Gibson Group"
-    end
-
-    within("#top-five-rev-#{@merchant9.id}") do 
       expect(page).to have_content("$1,035.00")
-    end 
+    end
 
     within("#top-five-merch-#{@merchant7.id}") do
       expect(page).to have_link "Kiehn Group"
@@ -254,12 +251,21 @@ RSpec.describe "Admin Merchants Index", type: feature do
     end
   end
 
-it "displays the highest revenue date next to each of the top 5 merchants" do
-    visit "dmin/merchants/"
+  it "displays the highest revenue date next to each of the top 5 merchants" do
+    load_test_data
 
-    expect(page).to have_content("$9,540.00")
-    # within ".flex-container-hdrs" do 
-      # expect("1,035.00").to appear_before("$837.00") 
-    # end
-  end
+    #When I visit the admin merchants index
+    visit "admin/merchants/"
+    # Then next to each of the 5 merchants by revenue
+    # I see the date with the most revenue for each merchant
+   
+    top_5_rev = Merchant.top_5_by_revenue
+
+    within "#top-five-merchants" do 
+      top_5_rev.each do |merch| 
+        expect(page).to have_content(merch.name)
+        expect(page).to have_content("Top Selling Date for #{merch.name} was #{merch.date_most_rev}")
+      end 
+    end
+  end 
 end

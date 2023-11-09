@@ -45,7 +45,6 @@ class Merchant < ApplicationRecord
     order(created_at: :desc)
   end
 
-
   def self.sort_by_name 
     order(:name)
   end
@@ -65,7 +64,7 @@ class Merchant < ApplicationRecord
     .group("merchants.id")
     .limit(5)
     .order("revenue DESC")
-    
+  end
   
   def date_most_rev 
     invoices.select("invoices.created_at, SUM(invoice_items.unit_price * invoice_items.quantity) AS revenue")

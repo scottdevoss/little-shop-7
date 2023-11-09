@@ -326,10 +326,8 @@ RSpec.describe Merchant, type: :model do
       InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice12.id, quantity: 2, unit_price: 235, status: 1)
       InvoiceItem.create!(item_id: @item10.id, invoice_id: @invoice13.id, quantity: 12, unit_price: 767, status: 1,)
       
-
-      # expect(@merchant8.date_most_rev).to eq("Wed, 06 Apr 2022")
-      # expect(@merchant9.date_most_rev).to eq("22/08/2022")
-      day = @merchant9.date_most_rev
+      expect(@merchant8.date_most_rev).to eq("04/06/2022")
+      expect(@merchant9.date_most_rev).to eq("22/08/2022")
 
     end
   end

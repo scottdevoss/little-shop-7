@@ -2,17 +2,23 @@
     <div class="subhead">
       <h2>Top 5 Merchants by Total Revenue</h2>
     </div>
-    <div class="flex-container-hdrs">
-      <h3 class="column-hdr">Merchant</h3>
-      <h3 class="column-hdr">Revenue</h3>
+
+    <p><%= link_to "Sort A-Z", "/admin/merchants?sort=alphabetical" %></p>
+    <p><%= link_to "Sort By Most Recent", "/admin/merchants?sort=date" %></p>
+    
+    <div class="row">
+      <h3 class="column">Merchant</h3>
+      <h3 class="column">Total Revenue</h3>
+      <h3 class="column">Top Selling Date</h3>
     </div>
+
     <% @merchants.top_5_by_revenue.each do |merchant| %>
-      <section class="flex-container">
-        <div class=<%= "index-top-five" %> id=<%= "top-five-merch-#{merchant.id}" %>>
+      <section class="row">
+        <div class=<%= "column" %> id=<%= "top-five-merch-#{merchant.id}" %>>
           <%= link_to merchant.name, admin_merchant_path(merchant.id) %> 
         </div>
-        <div class=<%= "index-top-five" %> id=<%= "top-five-rev-#{merchant.id}" %>><%= number_to_currency(merchant.revenue, unit: "$") %>
-        </div>
+        <p class=<%= "column" %> id=<%= "top-five-rev-#{merchant.id}" %>><%= number_to_currency(merchant.revenue, unit: "$") %></p>
+        <p  style="margin-left: -40px" class="column"><%= "Top selling date for #{merchant.name} was <date with most sales>" %> </p>
       </section>
     <% end %>
   </div>

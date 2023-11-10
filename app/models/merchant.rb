@@ -34,7 +34,8 @@ class Merchant < ApplicationRecord
   end
 
   def toggle_status
-    return 0 if enabled? 1
+    return 0 if enabled?
+    1
   end
 
   def self.alphabetical

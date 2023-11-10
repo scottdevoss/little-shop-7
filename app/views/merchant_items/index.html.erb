@@ -8,7 +8,7 @@
     <div class="subhead">
       <h2>Top 5 Most Popular Items:</h2>
     </div>
-    <% @merchant.top_5_items.each do |item| %>
+    <% @merchant._items.each do |item| %>
       <h4><%= link_to "#{item.name}", merchant_item_path(item.merchant_id, item.id) %></h4>
       <p>Total Revenue: $<%= Item.item_revenue(item) %></p>
       <p>Top selling date for <%= item.name %> was <%= Item.item_best_day(item).strftime('%-m/%d/%y') %>

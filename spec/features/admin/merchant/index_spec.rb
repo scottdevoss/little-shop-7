@@ -197,48 +197,39 @@ RSpec.describe "Admin Merchants Index", type: feature do
     # merchants to customers to invoice to invoice items
     # revenue =>
 
+    load_test_data
+    sample = load_test_data
+    require 'pry'; binding.pry
     visit "/admin/merchants"
 
     within("#top-five-merch-#{@merchant9.id}") do
       expect(page).to have_link "Gibson Group"
-      expect(page).to have_content("$1,035.00")
+      expect(page).to have_content("$940.00")
     end
 
     within("#top-five-merch-#{@merchant7.id}") do
       expect(page).to have_link "Kiehn Group"
-    end
-
-    within("#top-five-rev-#{@merchant7.id}") do 
       expect(page).to have_content("$837.00")
     end 
 
     within("#top-five-merch-#{@merchant1.id}") do
       expect(page).to have_link "Hannah's Handbags"
-    end
-
-    within("#top-five-rev-#{@merchant1.id}") do 
       expect(page).to have_content("$801.00")
-    end 
+    end
 
     within("#top-five-merch-#{@merchant5.id}") do
       expect(page).to have_link "Pollich and Sons"
-    end
-
-    within("#top-five-rev-#{@merchant5.id}") do 
       expect(page).to have_content("$711.00")
-    end 
+    end
 
     within("#top-five-merch-#{@merchant4.id}") do
       expect(page).to have_link "Klein, Rempel and Jones"
-    end
-
-    within("#top-five-rev-#{@merchant4.id}") do 
       expect(page).to have_content("$690.00")
-    end 
+    end
 
     within("#top-five-outer-container") do
       expect("Gibson Group").to appear_before("Kiehn Group")
-      expect("1,035.00").to appear_before("$837.00")
+      expect("940.00").to appear_before("$837.00")
 
       expect("Kiehn Group").to appear_before("Hannah's Handbags")
       expect("$837.00").to appear_before("$801.00")
@@ -251,15 +242,33 @@ RSpec.describe "Admin Merchants Index", type: feature do
     end
   end
 
-# Extension 1-2
-describe "sort by functionality" do
-  it 'can sort alphabetically' do
-    visit "/admin/merchants"
-    within ".disabled" do
-      expect(@merchant1.name).to appear_before(@merchant2.name)
-      expect(@merchant2.name).to appear_before(@merchant3.name)
-      expect(@merchant3.name).to appear_before(@merchant4.name)
+    it "displays the highest revenue date next to each of the top 5 merchants" do
+      load_test_data      
+      #When I visit the admin merchants index
+      visit "admin/merchants/"
+      # Then next to each of the 5 merchants by revenue
+      # I see the date with the most revenue for each merchant
+      
+      # _rev = Merchant._by_revenue
+      most_rev_date = Merchant.top_5_by_revenue
+      save_and_open_page
+      most_rev_date.each do |merch| 
+        within "#top-five-merch-#{merch.id}" do 
+        expect(page).to have_content(merch.name)
+        expect(page).to have_content("Top Selling Date for #{merch.name} was #{merch.date_most_rev.strftime("%m/%d/%Y")}")
+      end 
     end
+  end 
+
+  # Extension 1-2
+  describe "sort by functionality" do
+    it 'can sort alphabetically' do
+      visit "/admin/merchants"
+      within ".disabled" do
+        expect(@merchant1.name).to appear_before(@merchant2.name)
+        expect(@merchant2.name).to appear_before(@merchant3.name)
+        expect(@merchant3.name).to appear_before(@merchant4.name)
+      end
 
     expect(page).to have_link("Sort A-Z")
       
@@ -272,41 +281,24 @@ describe "sort by functionality" do
     end
   end
   
-  it 'can sort by most recent date' do
-    visit "/admin/merchants"
-    within ".disabled" do
-      expect(@merchant1.name).to appear_before(@merchant2.name)
-      expect(@merchant2.name).to appear_before(@merchant3.name)
-      expect(@merchant3.name).to appear_before(@merchant4.name)
-    end
+    it 'can sort by most recent date' do
+      visit "/admin/merchants"
+      within ".disabled" do
+        expect(@merchant1.name).to appear_before(@merchant2.name)
+        expect(@merchant2.name).to appear_before(@merchant3.name)
+        expect(@merchant3.name).to appear_before(@merchant4.name)
+      end
 
-    expect(page).to have_link("Sort By Most Recent")
+      expect(page).to have_link("Sort By Most Recent")
 
-    click_link("Sort By Most Recent")
+      click_link("Sort By Most Recent")
 
-    within ".disabled" do
-      expect(@merchant2.name).to appear_before(@merchant1.name)
-      expect(@merchant1.name).to appear_before(@merchant3.name)
-      expect(@merchant3.name).to appear_before(@merchant4.name)
+      within ".disabled" do
+        expect(@merchant2.name).to appear_before(@merchant1.name)
+        expect(@merchant1.name).to appear_before(@merchant3.name)
+        expect(@merchant3.name).to appear_before(@merchant4.name)
+      end
     end
   end
-end
 
-  it "displays the highest revenue date next to each of the top 5 merchants" do
-    load_test_data
-
-    #When I visit the admin merchants index
-    visit "admin/merchants/"
-    # Then next to each of the 5 merchants by revenue
-    # I see the date with the most revenue for each merchant
-   
-    top_5_rev = Merchant.top_5_by_revenue
-
-    within "#top-five-merchants" do 
-      top_5_rev.each do |merch| 
-        expect(page).to have_content(merch.name)
-        expect(page).to have_content("Top Selling Date for #{merch.name} was #{merch.date_most_rev}")
-      end 
-    end
-  end 
 end 

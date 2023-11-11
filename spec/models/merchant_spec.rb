@@ -322,24 +322,24 @@ RSpec.describe Merchant, type: :model do
     
     it "returns the date when merchant's had the most sales" do 
       @customer2 = Customer.create!(first_name: "Susan", last_name: "Robinson")
-      @merchant8 = Merchant.create!(name: "Smitham LLC")
-      @merchant9 = Merchant.create!(name: "Gibson Group")
+      @merchant9 = Merchant.create!(name: "Gibson Group", created_at: "Fri 04 Jun 2022")
+      @merchant8 = Merchant.create!(name: "Smitham LLC", created_at: "Wed, 23 Oct 2022")
       @item10 = Item.create!(name: "Hoop Earrings", unit_price: 125, merchant_id: @merchant9.id, description: "Bronze")
       @item9 = Item.create!(name: "Hair Clip", unit_price: 25, merchant_id: @merchant8.id, description: "Black Plastic")
-      @invoice8 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "06/04/2022")
-      @invoice9 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "06/04/2022")
-      @invoice12 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "22/08/2022")
-      @invoice13 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "22/08/2022")
-      @invoice7 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "05/04/2022")
+      @invoice8 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "Wed, 23 Oct 2022")
+      @invoice9 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "Mon, 17 Mar 2022")
+      @invoice12 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "Sat, 24 Feb 2022")
+      @invoice13 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "Thu, 04 Jun 2022")
+      @invoice7 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "Sat, 24 Feb 2022")
       InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice8.id, quantity: 3, unit_price: 711, status: 1)
       InvoiceItem.create!(item_id: @item10.id, invoice_id: @invoice9.id, quantity: 5, unit_price: 345, status: 1,)
 
       InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice12.id, quantity: 2, unit_price: 235, status: 1)
+      InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice7.id, quantity: 3, unit_price: 235, status: 1)
       InvoiceItem.create!(item_id: @item10.id, invoice_id: @invoice13.id, quantity: 12, unit_price: 767, status: 1,)
-      
-      expect(@merchant8.date_most_rev).to eq("04/06/2022")
-      expect(@merchant9.date_most_rev).to eq("22/08/2022")
 
+      expect(@merchant8.top_rev_date).to eq("Wed, 23 Oct 2022")
+      expect(@merchant9.top_rev_date).to eq("Thu, 04 Jun 2022")
     end
   end
 end

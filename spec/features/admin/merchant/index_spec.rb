@@ -194,42 +194,52 @@ RSpec.describe "Admin Merchants Index", type: feature do
   end
 
   it "displays the names of the top 5 merchants by total revenue generated" do 
-    # merchants to customers to invoice to invoice items
-    # revenue =>
 
-    load_test_data
-    sample = load_test_data
-    require 'pry'; binding.pry
     visit "/admin/merchants"
 
     within("#top-five-merch-#{@merchant9.id}") do
       expect(page).to have_link "Gibson Group"
-      expect(page).to have_content("$940.00")
     end
 
+    within("#top-five-rev-#{@merchant9.id}") do
+      expect(page).to have_content("$1,035.00")
+    end
+  
     within("#top-five-merch-#{@merchant7.id}") do
       expect(page).to have_link "Kiehn Group"
-      expect(page).to have_content("$837.00")
     end 
+    
+    within("#top-five-rev-#{@merchant7.id}") do
+      expect(page).to have_content("$837.00")
+    end
 
     within("#top-five-merch-#{@merchant1.id}") do
       expect(page).to have_link "Hannah's Handbags"
+    end
+
+    within("#top-five-rev-#{@merchant1.id}") do
       expect(page).to have_content("$801.00")
     end
 
     within("#top-five-merch-#{@merchant5.id}") do
       expect(page).to have_link "Pollich and Sons"
+    end
+
+    within("#top-five-rev-#{@merchant5.id}") do
       expect(page).to have_content("$711.00")
     end
 
     within("#top-five-merch-#{@merchant4.id}") do
       expect(page).to have_link "Klein, Rempel and Jones"
-      expect(page).to have_content("$690.00")
     end
 
+    within("#top-five-rev-#{@merchant4.id}") do
+      expect(page).to have_content("$690.00")
+    end
+    
     within("#top-five-outer-container") do
       expect("Gibson Group").to appear_before("Kiehn Group")
-      expect("940.00").to appear_before("$837.00")
+      expect("$1,035.00").to appear_before("$837.00")
 
       expect("Kiehn Group").to appear_before("Hannah's Handbags")
       expect("$837.00").to appear_before("$801.00")
@@ -240,22 +250,21 @@ RSpec.describe "Admin Merchants Index", type: feature do
       expect("Pollich and Sons").to appear_before("Klein, Rempel and Jones")
       expect("$711.00").to appear_before("$690.00")
     end
+
   end
 
     it "displays the highest revenue date next to each of the top 5 merchants" do
-      load_test_data      
-      #When I visit the admin merchants index
       visit "admin/merchants/"
       # Then next to each of the 5 merchants by revenue
       # I see the date with the most revenue for each merchant
       
       # _rev = Merchant._by_revenue
       most_rev_date = Merchant.top_5_by_revenue
-      save_and_open_page
+
       most_rev_date.each do |merch| 
-        within "#top-five-merch-#{merch.id}" do 
+        within "#top-five-date-#{merch.id}" do 
         expect(page).to have_content(merch.name)
-        expect(page).to have_content("Top Selling Date for #{merch.name} was #{merch.date_most_rev.strftime("%m/%d/%Y")}")
+        expect(page).to have_content("The top selling date for #{merch.name} was #{merch.top_rev_date.strftime("%m/%d/%Y")}")
       end 
     end
   end 

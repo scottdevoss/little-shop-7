@@ -67,7 +67,7 @@ class Merchant < ApplicationRecord
     .order("revenue DESC")
   end
   
-  def date_most_rev 
+  def top_rev_date
     invoices.select("invoices.created_at, SUM(invoice_items.unit_price * invoice_items.quantity) AS revenue")
     .group("invoices.created_at")
     .order("revenue desc")

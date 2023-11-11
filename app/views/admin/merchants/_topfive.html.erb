@@ -18,7 +18,7 @@
           <%= link_to merchant.name, admin_merchant_path(merchant.id) %> 
         </div>
         <p class=<%= "column" %> id=<%= "top-five-rev-#{merchant.id}" %>><%= number_to_currency(merchant.revenue, unit: "$") %></p>
-        <p  style="margin-left: -40px" class="column"><%= "Top selling date for #{merchant.name} was <date with most sales>" %> </p>
+        <p class=<%= "column" %> id=<%= "top-five-date-#{merchant.id}" %>><%= "The top selling date for #{merchant.name} was #{merchant.top_rev_date.strftime("%m/%d/%Y")}" %></p>
       </section>
     <% end %>
   </div>

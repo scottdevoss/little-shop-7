@@ -159,6 +159,11 @@ RSpec.describe "Merchant Dashboard", type: :feature do
           expect(@invoice_3.creation_date).to appear_before(@invoice_1.creation_date)
         end
       end
+        it "has a link to view all of the discounts the merchant is offering in the Discounts Show Page" do 
+          @merchant1 = Merchant.create!(name: "Hannah's Handbags")
+          save_and_open_page
+          expect(page).to have_link("View my discounts")
+        end
     end
   end
 end

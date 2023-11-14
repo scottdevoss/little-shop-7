@@ -10,3 +10,6 @@
 # Merchant.destroy_all 
 
 # FactoryBot.create_list(:merchant, 1)
+require "./spec/helper_methods"
+
+load_test_data

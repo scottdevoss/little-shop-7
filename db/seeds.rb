@@ -7,6 +7,6 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 
-Merchant.destroy_all 
+# Merchant.destroy_all 
 
-FactoryBot.create_list(:merchant, 8)
+# FactoryBot.create_list(:merchant, 1)

@@ -2,6 +2,7 @@ class MerchantDiscountsController < ApplicationController
   def index 
     @discounts = Discount.all
     @merchant = Merchant.find(params[:merchant_id])
+    
   end
 
   def show 
@@ -23,6 +24,14 @@ class MerchantDiscountsController < ApplicationController
       flash[:notice] = "Discount not added. The discount rate or quantity field was not filled in correctly. Please try again."
     end
       redirect_to "/merchants/#{merchant.id}/discounts"
+  end
+
+  def destroy 
+    discount = Discount.find(params[:id])
+    merchant = discount.merchant
+    discount.destroy
+
+    redirect_to "/merchants/#{merchant.id}/discounts"
   end
 
 end

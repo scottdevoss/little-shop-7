@@ -1,0 +1,10 @@
+<h1><%= "#{@merchant.name}'s New Discount" %></h1>
+<%= form_with url: merchant_discounts_path(@merchant.id), data: { turbo: false }, local: true do |f| %>
+  <%= f.label "Enter discount rate" %>
+  <%= f.text_field :new_rate %>
+
+  <%= f.label "Enter bulk amount" %>
+  <%= f.text_field :threshold %>
+
+  <%= f.submit "Add new discount" %>
+<% end %>

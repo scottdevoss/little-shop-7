@@ -1,1 +1,6 @@
-<h1>Merchant Discounts Index Page</h1>
+<%= @discounts.each do |discount|%>
+<h1><%= "#{discount.merchant.name}'s Discounts" %></h1>
+  <section id=<%="idx-#{discount.id}"%>>
+    <%= link_to "#{discount.discount.to_i}% off #{(discount.qty).to_i} items", merchant_discount_path(merchant_id: discount.merchant_id, id: discount.id) %>
+  </section>
+<% end %>

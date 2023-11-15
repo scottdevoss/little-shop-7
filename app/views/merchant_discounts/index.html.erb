@@ -3,7 +3,8 @@
 <br>
 <% @discounts.each do |discount|%>
   <section id=<%="idx-#{discount.id}"%>>
-    <%= link_to "#{discount.discount.to_i}% off #{(discount.qty).to_i} items", merchant_discount_path(merchant_id: discount.merchant_id, id: discount.id) %>
+    <%= link_to "#{discount.discount.to_i}% off #{(discount.qty).to_i} items", merchant_discount_path(merchant_id: @merchant.id, id: discount.id), method: :get %>
+    <%= button_to "Delete", merchant_discount_path(merchant_id: @merchant.id, id: discount.id), method: :delete %>
   </section>
   <br>
 <% end %>

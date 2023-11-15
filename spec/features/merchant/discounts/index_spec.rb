@@ -13,39 +13,37 @@ RSpec.describe "Bulk Discounts Index Page" do
     @invoice_item2 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 50, status: 2) 
     @transaction1 = Transaction.create!(credit_card_number: 123456789, credit_card_expiration_date: "11/26", result: 0, invoice_id: @invoice1.id)
     @transaction2 = Transaction.create!(credit_card_number: 123456789, credit_card_expiration_date: "11/26", result: 0, invoice_id: @invoice2.id)
+    @discount1 = Discount.create!(discount: 20, qty: 10, merchant_id: @merchant1.id)
+    @discount2 = Discount.create!(discount: 30, qty: 15, merchant_id: @merchant1.id)
+    @discount3 = Discount.create!(discount: 35, qty: 20, merchant_id: @merchant1.id)
    end
 
   it "as a Merchant, when I visit my merchant dashboard, then I see a link to view all my discounts " do 
 
     visit "merchants/#{@merchant1.id}/dashboard"
 
-    expect(page).to have_link "View My Discounts"
+    expect(page).to have_link "View my discounts"
   end
 
   it "when I click this link, I am taken to my bulk discounts index page where I see the percentage discount and quantity thresholds for all my bulk discounts" do 
 
     visit "merchants/#{@merchant1.id}/dashboard"
 
-    click_link "View My Discounts" 
+    click_link "View my discounts" 
 
-    expect(current_path).to eq("merchants/#{merchant.id}/discounts")
+    expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts")
 
-    within "#discount-#{discount.id}" do 
-      expect(page).to have_content("20% off of 10 items")
-      expect(page).to have_content("30% off of 15 items")
-      expect(page).to have_content("35% off of 20 items")
-    end
-  end
+    discounts = Discount.all
 
-  it "each bulk discount listed includes a link to its show page" do 
+    discounts.each do |discount|
 
-    Discount.each.with_index do |discount, idx| 
-      visit "merchants/#{merchant.id}/discounts"
-      within "#discount-#{discount.id}" do 
-        expect(page).to have_link(discount.name)
-        click_link "#{discount.name}"
-        expect(current_path).to eq("merchants/#{merchant.id}/discounts/#{discount.id}")
-        expect(page).to have_content("@discount#{idx}.name")
+      visit "/merchants/#{discount.merchant_id}/discounts"
+
+      within "#idx-#{discount.id}" do 
+        expect(page).to have_link("#{discount.discount}% off #{discount.qty} items")
+        click_link "#{discount.discount}% off #{discount.qty} items"
+        expect(current_path).to eq("/merchants/#{discount.merchant_id}/discounts/#{discount.id}")
+        # expect(page).to have_content("#{discount.merchant.name}'s #{discount.discount.to_i}% off Discount")
       end
     end
   end

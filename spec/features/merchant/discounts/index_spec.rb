@@ -58,10 +58,9 @@ RSpec.describe "Bulk Discounts Index Page" do
       expect(page).to have_button("Add new discount")
       #  When I fill in the form with valid data
       fill_in :new_rate, with: 50
-      fill_in :threshold, with: 50  
+      fill_in :threshold, with: 50
 
       click_button("Add new discount")
-
       # Then I am redirected back to the bulk discount index
       expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts")
       # And I see my new bulk discount listed
@@ -86,7 +85,6 @@ RSpec.describe "Bulk Discounts Index Page" do
       
       click_button("Add new discount")
       
- 
       expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts")
 
       expect(page).to have_content("Discount not added. The discount rate or quantity field was not filled in correctly. Please try again.")
@@ -102,5 +100,26 @@ RSpec.describe "Bulk Discounts Index Page" do
 
       expect(page).to have_content("Discount not added. The discount rate or quantity field was not filled in correctly. Please try again.")
     end
-  end 
+  end
+  
+  describe "deleting a bulk discount" do 
+    it "has a delete button next to each bulk discount currently listed" do 
+      visit "/merchants/#{@merchant1.id}/discounts"
+
+      expect(page).to have_link("#{@discount1.discount.to_i}% off")
+      expect(page).to have_link("#{@discount2.discount.to_i}% off")
+      expect(page).to have_link("#{@discount3.discount.to_i}% off")
+
+      within "#idx-#{@discount2.id}" do 
+        expect(page).to have_link("#{@discount2.discount.to_i}% off")
+        expect(page).to have_button("Delete")
+        click_button "Delete"
+        expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts")
+      end
+      expect(page).to_not have_link("#{@discount2.discount.to_i}% off")
+      expect(page).to have_link("#{@discount1.discount.to_i}% off")
+      expect(page).to have_link("#{@discount3.discount.to_i}% off")
+    end
+  end
+  
 end 

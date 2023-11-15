@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  
   patch "/admin/invoices/:id", to: "admin/invoices#update"
   resources :admin, only: [:index]
   
@@ -20,7 +19,7 @@ Rails.application.routes.draw do
   resources :merchants do
     resources :items, only: [:index, :new, :edit, :show, :update, :create], controller: "merchant_items"
     resources :invoices, only: [:index, :show, :update], controller: "merchant_invoices"
-    resources :discounts, only: [:index, :show], controller: "merchant_discounts"
+    resources :discounts, only: [:index, :show, :new, :create], controller: "merchant_discounts"
   end
   
   

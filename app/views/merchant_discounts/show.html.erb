@@ -1,3 +1,4 @@
 <h1><%= "#{@merchant.name}'s #{@discount.discount}% Off Discount" %></h1>
+ <%= link_to "Edit", edit_merchant_discount_path(@merchant.id, @discount.id), method: :get %>
 <p><%= "discount %: #{@discount.discount} " %></p>
 <p><%= "quantity: #{@discount.qty} " %></p>

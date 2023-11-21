@@ -9,11 +9,12 @@ RSpec.describe Discount do
     @item1 = Item.create!(name: "Gold Ring", unit_price: 100, merchant_id: @merchant1.id, description: "14k Gold")
     @item2 = Item.create!(name: "Silver Ring", unit_price: 200, merchant_id: @merchant1.id, description: "Pure Silver")
     @item3 = Item.create!(name: "Platinum Bracelet", unit_price: 500, merchant_id: @merchant1.id, description: "Platinum")
-    @item3 = Item.create!(name: "Brolex Watch", unit_price: 1000, merchant_id: @merchant1.id, description: "The Rolex for Bros")
+    @item4= Item.create!(name: "Brolex Watch", unit_price: 1000, merchant_id: @merchant1.id, description: "The Rolex for Bros")
 
     @invoice1 = Invoice.create!(status: 2, customer_id: @customer1.id)
     @invoice2 = Invoice.create!(status: 2, customer_id: @customer1.id)
     @invoice3 = Invoice.create!(status: 2, customer_id: @customer1.id)
+    @invoice4 = Invoice.create!(status: 2, customer_id: @customer1.id)
 
     @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 9, unit_price: 100, status: 2) 
     @invoice_item2 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice1.id, quantity: 14, unit_price: 200, status: 2) 

@@ -1,10 +1,10 @@
 <h1><%= "Edit #{@merchant.name}'s #{@discount.discount}% Off Discount" %></h1>
-<%= form_with url: merchant_discount_path(@merchant.id, @discount.id), method: :patch, local: true do |f| %>
+<%= form_with url: merchant_discount_path(@merchant.id, @discount.id), method: :patch, data: {turbo: false}, local: true do |f| %>
   <%= f.label "Enter rate" %>
   <%= f.text_field :new_rate %>
 
   <%= f.label "Enter quantity" %>
   <%= f.text_field :threshold %>
-
+  
   <%= f.submit "Submit" %>
 <% end %>

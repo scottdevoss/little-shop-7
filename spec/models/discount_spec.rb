@@ -32,5 +32,5 @@ RSpec.describe Discount do
     expect(@discount1.qty).to eq(10)
     expect(@discount1.merchant_id).to eq(@merchant1.id)
   end
-  
+
 end 

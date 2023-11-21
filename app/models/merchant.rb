@@ -1,6 +1,6 @@
 class Merchant < ApplicationRecord
-  has_many :items
   has_many :discounts
+  has_many :items
   has_many :invoices, through: :items
 
   enum status: { "disabled": 0, "enabled": 1 }

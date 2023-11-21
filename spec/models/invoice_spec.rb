@@ -33,9 +33,19 @@ RSpec.describe Invoice, type: :model do
 
       @item1 = Item.create!(name: "Item Qui Esse", description: "Nihil autem sit odio inventore deleniti.", unit_price: 75107, merchant_id: @merchant1.id)
       @item2 = Item.create!(name: "Item Autem Minima", description: "Cumque consequuntur ad.", unit_price: 67076, merchant_id: @merchant1.id)
+      @item3 = Item.create!(name: "Platinum Necklace", description: "100k platiunum.", unit_price: 1000, merchant_id: @merchant1.id)
+      @item4 = Item.create!(name: "Gold Watch", description: "24k Gold", unit_price: 10000, merchant_id: @merchant1.id)
+      @item5 = Item.create!(name: "Diamond Ring", description: "Flawless cut, color, and clarity", unit_price: 10000, merchant_id: @merchant1.id)
 
-      @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 2, unit_price: 10)
-      @invoice_item2 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 20)
+      @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 9, unit_price: 1000)
+      @invoice_item2 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice1.id, quantity: 14, unit_price: 5000)
+      @invoice_item3 = InvoiceItem.create!(item_id: @item3.id, invoice_id: @invoice1.id, quantity: 19, unit_price: 10000)
+      @invoice_item4 = InvoiceItem.create!(item_id: @item4.id, invoice_id: @invoice1.id, quantity: 25, unit_price: 50000)
+
+      @discount1 = Discount.create!(discount: 20, qty: 10, merchant_id: @merchant1.id)
+      @discount2 = Discount.create!(discount: 30, qty: 15, merchant_id: @merchant1.id)
+      @discount3 = Discount.create!(discount: 35, qty: 20, merchant_id: @merchant1.id)
+
     end
 
     describe "#self.incomplete_by_creation_date" do
@@ -58,8 +68,7 @@ RSpec.describe Invoice, type: :model do
 
     describe '#revenue' do
       it 'tells the total revenue of an invoice' do
-        expect(@invoice1.revenue).to eq(40)
-      
+        expect(@invoice1.revenue).to eq(1519000)
       end
     end
 
@@ -99,6 +108,17 @@ RSpec.describe Invoice, type: :model do
         expect(@invoice1.status).to eq("cancelled")
         @invoice1.change_status("in progress")
         expect(@invoice1.status).to eq("in progress")
+      end
+    end
+
+    describe "#total_revenue" do 
+      it "calculates the total revenue without bulk discounts" do 
+        expect(@invoice1.total_revenue).to eq(1519000)
+      end
+    
+    describe "#total_revenue_less_discount"
+      it "calculates the total revenue with bulk discounts applied" do 
+        expect(@invoice1.total_revenue_less_discounts).to eq(1010500)
       end
     end
   end

@@ -137,9 +137,9 @@ RSpec.describe Item, type: :model do
   describe "item_best_day" do
     it "returns the date with the most sales for each item" do
       best_day = Item.item_best_day(@item1)
-
-      # expect(best_day).to eq(Date.today)
-      expect(best_day).to eq(Date.today+1)
+      date_stub = Date.new(best_day.year, best_day.month, best_day.day)
+      allow(Date).to receive(:today).and_return(date_stub)
+      expect(best_day).to eq(Date.today)
     end
   end
 

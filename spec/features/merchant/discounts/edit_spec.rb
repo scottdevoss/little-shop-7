@@ -15,6 +15,7 @@ RSpec.describe "Bulk Discount Show Page" do
     expect(page).to have_content("discount %: 35")
     expect(page).to have_content("quantity: 20")
     expect(page).to have_link("Edit")
+    
     click_link "Edit"
 
     expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts/#{@discount3.id}/edit")

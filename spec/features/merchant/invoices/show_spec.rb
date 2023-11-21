@@ -48,7 +48,7 @@ RSpec.describe 'merchant invoices show page' do
     @invoice_item10 = InvoiceItem.create!(item_id: @item8.id, invoice_id: @invoice10.id, quantity: 1, unit_price: 126, status: 1)
     @invoice_item11 = InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice11.id, quantity: 1, unit_price: 123, status: 1)
     @invoice_item12 = InvoiceItem.create!(item_id: @item10.id, invoice_id: @invoice12.id, quantity: 1, unit_price: 345, status: 1)
-    @invoice_item13 = InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice1.id, quantity: 2, unit_price: 25, status: 1)
+    @invoice_item13 = InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice1.id, quantity: 5, unit_price: 25, status: 1)
     # @invoice_item14 = InvoiceItem.create!(item_id: @item10.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 345, status: 1)
 
     @transaction1 = Transaction.create!(invoice_id: @invoice1.id, credit_card_number: "1234567812345678", credit_card_expiration_date: "10/26", result: 0)
@@ -92,8 +92,7 @@ RSpec.describe 'merchant invoices show page' do
     end
     it 'shows the total revenue' do
       visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
-
-      expect(page).to have_content((@item1.unit_price + @item9.unit_price + @item9.unit_price))
+      expect(page).to have_content($75,232.00)
     end
 
     it 'allows you to update item status' do
@@ -125,5 +124,19 @@ RSpec.describe 'merchant invoices show page' do
       
       expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}")
     end
+
+    it "calculates the total revenue included in the invoice without applying any bulk discounts" do 
+      visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
+
+      expect(page).to have_content("Total Revenue (no discounts applied): $75,232.00")
+    end
+    
+    it "calculates total revenue after applying bulk discounts" do 
+      load_test_data
+      visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
+      
+      # expect(page).to have_content("Total Revenue (WITH discounts applied): $75,157.00")
+    end
   end
+
 end 

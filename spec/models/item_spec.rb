@@ -97,7 +97,6 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  #this originally had a typo
   describe 'invoice_id' do
     it 'plucks the invoice id' do          
       expect(@item1.invoice_id).to eq([@invoice1.id, @invoice3.id, @invoice5.id])
@@ -137,9 +136,11 @@ RSpec.describe Item, type: :model do
   describe "item_best_day" do
     it "returns the date with the most sales for each item" do
       best_day = Item.item_best_day(@item1)
+      date_stub = Date.new(@item1.created_at.year, @item1.created_at.month, @item1.created_at.day)
 
-      # expect(best_day).to eq(Date.today)
-      expect(best_day).to eq(Date.today+1)
+      allow(Date).to receive(:today).and_return date_stub
+
+      expect(best_day).to eq(date_stub)
     end
   end
 

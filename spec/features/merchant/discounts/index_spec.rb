@@ -76,7 +76,7 @@ RSpec.describe "Bulk Discounts Index Page" do
       click_button("Add new discount")
       
       expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts")
-      expect(page).to have_content("Discount not added. The discount rate or quantity field was not filled in correctly. Please try again.")
+      expect(page).to have_content("Discount not added. Rate or quantity has invalid data. Please try again.")
       
       click_link("Create a new discount")
       
@@ -87,7 +87,7 @@ RSpec.describe "Bulk Discounts Index Page" do
       
       expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts")
 
-      expect(page).to have_content("Discount not added. The discount rate or quantity field was not filled in correctly. Please try again.")
+      expect(page).to have_content("Discount not added. Rate or quantity has invalid data. Please try again.")
       
       click_link("Create a new discount")
       
@@ -98,7 +98,7 @@ RSpec.describe "Bulk Discounts Index Page" do
 
       expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts")
 
-      expect(page).to have_content("Discount not added. The discount rate or quantity field was not filled in correctly. Please try again.")
+      expect(page).to have_content("Discount not added. Rate or quantity has invalid data. Please try again.")
     end
   end
   

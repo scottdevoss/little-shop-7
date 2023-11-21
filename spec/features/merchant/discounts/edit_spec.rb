@@ -34,9 +34,51 @@ RSpec.describe "Bulk Discount Show Page" do
     expect(page).to have_content("50% Off Discount")
     expect(page).to have_content("discount %: 50")
     expect(page).to have_content("quantity: 50")
+    expect(page).to have_content("Discount successfully updated.")
 
     expect(page).to_not have_content("35% Off Discount")
     expect(page).to_not have_content("discount %: 35")
     expect(page).to_not have_content("quantity: 20")
+  end
+
+  it "only updates discount if data input is valid" do 
+    visit "/merchants/#{@merchant1.id}/discounts/#{@discount1.id}/edit"
+    
+    fill_in :new_rate, with: "~50@#"
+    fill_in :threshold, with: 50
+    
+    click_button "Submit"
+    
+    expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts/#{@discount1.id}")
+    expect(page).to_not have_content("~50@# Off Discount")
+    expect(page).to_not have_content("discount %: ~50@#")
+    expect(page).to_not have_content("quantity: 50")
+    expect(page).to have_content("Discount not updated. Rate or quantity has invalid data. Please try again.")
+    
+    visit "/merchants/#{@merchant1.id}/discounts/#{@discount1.id}/edit"
+    
+    fill_in :new_rate, with: 50
+    fill_in :threshold, with: "~50@#"
+    
+    click_button "Submit"
+    
+    expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts/#{@discount1.id}")
+    expect(page).to_not have_content("50% off discount")
+    expect(page).to_not have_content("discount %: 50")
+    expect(page).to_not have_content("quantity: ~50@#")
+    expect(page).to have_content("Discount not updated. Rate or quantity has invalid data. Please try again.")
+    
+    visit "/merchants/#{@merchant1.id}/discounts/#{@discount1.id}/edit"
+    
+    fill_in :new_rate, with: " "
+    fill_in :threshold, with: " "
+    
+    click_button "Submit"
+    
+    expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts/#{@discount1.id}")
+    expect(page).to_not have_content("' ' off discount")
+    expect(page).to_not have_content("discount %: ' '")
+    expect(page).to_not have_content("quantity: ' '")
+    expect(page).to have_content("Discount not updated. Rate or quantity has invalid data. Please try again.")
   end
 end

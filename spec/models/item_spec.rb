@@ -97,7 +97,6 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  #this originally had a typo
   describe 'invoice_id' do
     it 'plucks the invoice id' do          
       expect(@item1.invoice_id).to eq([@invoice1.id, @invoice3.id, @invoice5.id])

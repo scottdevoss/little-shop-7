@@ -45,7 +45,7 @@ class MerchantDiscountsController < ApplicationController
     if discount.update({ discount: params[:new_rate], qty: params[:threshold], merchant_id: params[:merchant_id] })
       flash[:notice] = "Discount successfully updated."
   else
-    flash[:notice] = "Discount not added. Rate or quantity has invalid data. Please try again."
+    flash[:notice] = "Discount not updated. Rate or quantity has invalid data. Please try again."
   end
     redirect_to "/merchants/#{params[:merchant_id]}/discounts/#{params[:id]}"
   end

@@ -13,6 +13,8 @@
 
   <h2>Items On This Invoice</h2>
 
+  <h4><%= "Total Revenue (no discounts applied): #{number_to_currency(@invoice.total_revenue)}" %></h4>
+  <h4><%= "Total Revenue (WITH discounts applied): #{number_to_currency(@invoice.total_revenue_less_discounts)}" %></h4>
   <% @invoice.invoice_items.each do |invoice_item| %>
     <section id="invoice-item_<%= invoice_item.id %>">
       <div class="subhead">
@@ -29,5 +31,4 @@
       <% end %>
     </section>
   <% end %>
-  <h4>Revenue: <%= @invoice.revenue %></h4>
 </div>

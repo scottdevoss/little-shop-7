@@ -23,4 +23,6 @@
   <p><%= link_to "Invoices", "/merchants/#{@merchant.id}/invoices" %></p>
 
   <%= render partial: 'layouts/topfive' %>
+  
+  <p><%= link_to "View my discounts", merchant_discounts_path(@merchant.id)  %></p>
 </div>

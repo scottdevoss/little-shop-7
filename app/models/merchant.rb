@@ -1,6 +1,8 @@
 class Merchant < ApplicationRecord
   has_many :items
   has_many :invoices, through: :items
+  has_many :invoice_items, through: :items
+  has_many :transactions, through: :invoices
 
   enum status: { "disabled": 0, "enabled": 1 }
 
@@ -32,8 +34,19 @@ class Merchant < ApplicationRecord
   end
 
   def toggle_status
-    return 0 if enabled?
-    1
+    return 0 if enabled? 1
+  end
+
+  def self.alphabetical
+    order(:name)
+  end
+
+  def self.most_recent
+    order(created_at: :desc)
+  end
+
+  def self.sort_by_name 
+    order(:name)
   end
 
   def self.alphabetical
@@ -49,7 +62,18 @@ class Merchant < ApplicationRecord
     .joins(items: { invoice_items: { invoice: :transactions } })
     .where("transactions.result = ?", "0")
     .group("merchants.id")
-    .limit(5).order("revenue DESC")
+    .limit(5)
+    .order("revenue DESC")
   end
-
+  
+  def date_most_rev 
+    invoices.select("invoices.created_at, SUM(invoice_items.unit_price * invoice_items.quantity) AS revenue")
+    .group("invoices.created_at")
+    .order("revenue desc")
+    .first
+    .created_at
+  end
+  
 end
+
+

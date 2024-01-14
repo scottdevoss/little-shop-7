@@ -304,7 +304,8 @@ RSpec.describe Merchant, type: :model do
       @transaction10 = Transaction.create!(invoice_id: @invoice10.id, credit_card_number: "1234567812345678", credit_card_expiration_date: "10/26", result: 0)
     end
 
-    it "has a section that displays the top 5 merchants by revenue and sorts them in descending order, by revenue" do 
+    it "returns top five merchants by revenue" do 
+      
       top_five = Merchant.top_5_by_revenue
 
       expect(top_five).to eq([@merchant9, @merchant7, @merchant1, @merchant5, @merchant4])
@@ -317,4 +318,28 @@ RSpec.describe Merchant, type: :model do
     end
   end
 
+  describe "#date_most_rev" do 
+    
+    it "returns the date when merchant's had the most sales" do 
+      @customer2 = Customer.create!(first_name: "Susan", last_name: "Robinson")
+      @merchant8 = Merchant.create!(name: "Smitham LLC")
+      @merchant9 = Merchant.create!(name: "Gibson Group")
+      @item10 = Item.create!(name: "Hoop Earrings", unit_price: 125, merchant_id: @merchant9.id, description: "Bronze")
+      @item9 = Item.create!(name: "Hair Clip", unit_price: 25, merchant_id: @merchant8.id, description: "Black Plastic")
+      @invoice8 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "06/04/2022")
+      @invoice9 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "06/04/2022")
+      @invoice12 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "22/08/2022")
+      @invoice13 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "22/08/2022")
+      @invoice7 = Invoice.create!(status: 2, customer_id: @customer2.id, created_at: "05/04/2022")
+      InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice8.id, quantity: 3, unit_price: 711, status: 1)
+      InvoiceItem.create!(item_id: @item10.id, invoice_id: @invoice9.id, quantity: 5, unit_price: 345, status: 1,)
+
+      InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice12.id, quantity: 2, unit_price: 235, status: 1)
+      InvoiceItem.create!(item_id: @item10.id, invoice_id: @invoice13.id, quantity: 12, unit_price: 767, status: 1,)
+      
+      expect(@merchant8.date_most_rev).to eq("04/06/2022")
+      expect(@merchant9.date_most_rev).to eq("22/08/2022")
+
+    end
+  end
 end

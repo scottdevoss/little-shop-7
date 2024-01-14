@@ -17,12 +17,13 @@
 
  .flex-container-hdrs {
   display: flex;
-  width: 500px;
+  flex-direction: row;
+  width: 1200px;
  }
 
  .flex-container {
   display: flex;
-  width: 500px;
+  width: 1200px;
  }
 
  .show-merch {
@@ -30,10 +31,29 @@
  }
 
  .index-top-five {
-  flex: 1 1 50px;
+  flex: 1 1 1 50px;
  }
 
  .column-hdr {
-  flex: 1 1 50px;
+  flex: 1 1 1 50px;
   text-decoration: underline;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 50px;
+ }
+.top-day
+ {
+  display: inline;
+ }
+
+#top-five-outer-container
+ {
+    display:inline
+ }
+
+ .merch-link {
+   display: inline;
+   margin-left: 220px;
+   margin-right: 220px;
+
  }

@@ -5,7 +5,6 @@ class Item < ApplicationRecord
 
   enum :status, {"disabled" => 0, "enabled" => 1}
 
-
   def invoice
   self.invoices.each do |invoice|
     invoice
@@ -47,7 +46,6 @@ end
     return "Disable" if status == "enabled"
     "Enable"
   end
-
 
   def enabled?
     if self.status == "enabled"

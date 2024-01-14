@@ -37,7 +37,6 @@ RSpec.describe Merchant, type: :model do
       @transaction7 = Transaction.create!(credit_card_number: 123456789, credit_card_expiration_date: "11/26", result: 1, invoice_id: @invoice7.id)
 
       top_5 = @merchant1.top_5_customers
-
       expect(top_5).to eq([@customer2, @customer3, @customer4, @customer5, @customer6])
       expect(top_5).to_not include(@customer1)
       expect(top_5).to_not include(@customer7)
@@ -74,13 +73,6 @@ RSpec.describe Merchant, type: :model do
           unit_price: 4291,
           merchant_id: @merchant2.id
         )
-        # @item5 = Item.create!(
-        #   id: 5,
-        #   name: "Item Expedita Aliquam",
-        #   description: "Voluptate aut labore qui illum tempore eius. Corrupti cum et rerum. Enim illum labore voluptatem dicta consequatur. Consequatur sunt consequuntur ut officiis.",
-        #   unit_price: 68723,
-        #   merchant_id: @merchant2.id
-        # )
         @item5 = Item.create!(name: "Gold Ring", unit_price: 1200, merchant_id: @merchant1.id, description: "14k Gold")
         @item6 = Item.create!(name: "Silver Ring", unit_price: 900, merchant_id: @merchant1.id, description: "Pure Silver")
         @item7 = Item.create!(name: "Gold Necklace", unit_price: 1400, merchant_id: @merchant1.id, description: "10k Gold")

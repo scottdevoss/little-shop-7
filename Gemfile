@@ -53,7 +53,6 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "rspec-rails"
   gem "capybara" 
-  gem "pry" 
   gem "faker" 
   gem "factory_bot_rails" 
   gem "orderly" 
@@ -61,6 +60,7 @@ group :development, :test do
   gem "shoulda-matchers" 
   gem "launchy"
   gem 'date'
+  gem "pry-nav"
 end
 
 group :development do
